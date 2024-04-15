@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayerActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvPName"
+                android:layout_width="200dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="20dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/ivPImage"
+                app:layout_constraintStart_toEndOf="@+id/ivPImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivPImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <TextView
+                android:id="@+id/tvPDescription"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="45dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPImage" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/tvPDescription"
+                app:layout_constraintStart_toStartOf="@+id/tvPDescription" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/tvPAccount"
+                app:layout_constraintStart_toStartOf="@+id/tvPAccount" />
+
+            <TextView
+                android:id="@+id/tvPAccount"
+                android:layout_width="300dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="45dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPDescription" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/tvPContact"
+                app:layout_constraintStart_toStartOf="@+id/tvPContact" />
+
+            <TextView
+                android:id="@+id/tvPContact"
+                android:layout_width="300dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="45dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPAccount" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/ivPTeam"
+                app:layout_constraintStart_toStartOf="@+id/tvPContact" />
+
+            <ImageView
+                android:id="@+id/ivPTeam"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <TextView
+                android:id="@+id/tvPTeam"
+                android:layout_width="201dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="20dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/ivPTeam"
+                app:layout_constraintStart_toEndOf="@+id/ivPTeam"
+                app:layout_constraintTop_toTopOf="@+id/ivPTeam" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
