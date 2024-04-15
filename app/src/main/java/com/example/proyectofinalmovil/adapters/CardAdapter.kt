@@ -13,6 +13,7 @@ class CardAdapter (var lista: List<CardPOJO>, val onItemClick: (CardPOJO)->Unit)
     }
 
     override fun getItemCount(): Int {
+        fdtfdgfdgfdgdfgrdtgdfgtrehgvdgrdfgrydr
         return lista.size
     }
 
