@@ -12,8 +12,8 @@ import com.example.proyectofinalmovil.CreateTournamentActivity
 import com.example.proyectofinalmovil.PlayerActivity
 import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.SearchActivity
+import com.example.proyectofinalmovil.SettingsActivity
 import com.example.proyectofinalmovil.TournamentActivity
-import com.example.proyectofinalmovil.models.Player
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,11 +27,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class MenuFragment : Fragment() {
     lateinit var btnSearch: ImageButton
-    lateinit var btnProfile: ImageButton
     lateinit var btnCreateTournament: ImageButton
+    lateinit var btnProfile: ImageButton
+    lateinit var btnSettings: ImageButton
     lateinit var cvSearch: CardView
-    lateinit var cvProfile: CardView
     lateinit var cvCreateTournament: CardView
+    lateinit var cvProfile: CardView
+    lateinit var cvSettings: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +51,14 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnSearch = view.findViewById<ImageButton>(R.id.btnSearch)
-        btnProfile = view.findViewById<ImageButton>(R.id.btnProfile)
         btnCreateTournament = view.findViewById<ImageButton>(R.id.btnCreateTournament)
+        btnProfile = view.findViewById<ImageButton>(R.id.btnProfile)
+        btnSettings = view.findViewById<ImageButton>(R.id.btnSettings)
+
         cvSearch = view.findViewById<CardView>(R.id.cvSearch)
-        cvProfile = view.findViewById<CardView>(R.id.cvProfile)
         cvCreateTournament = view.findViewById<CardView>(R.id.cvCreateTournament)
+        cvProfile = view.findViewById<CardView>(R.id.cvProfile)
+        cvSettings = view.findViewById<CardView>(R.id.cvSettings)
 
         mostrarSombra()
 
@@ -62,39 +67,56 @@ class MenuFragment : Fragment() {
 
     private fun mostrarSombra(){
         cvSearch.cardElevation = 0f
-        cvProfile.cardElevation = 0f
         cvCreateTournament.cardElevation = 0f
+        cvProfile.cardElevation = 0f
+        cvSettings.cardElevation = 0f
 
         if(this.activity is SearchActivity){
             cvSearch.cardElevation = 10f
         }
+        if(this.activity is CreateTournamentActivity){
+            cvCreateTournament.cardElevation = 10f
+        }
         if(this.activity is PlayerActivity){
             cvProfile.cardElevation = 10f
         }
-        if(this.activity is CreateTournamentActivity){
-            cvCreateTournament.cardElevation = 10f
+        if(this.activity is SettingsActivity){
+            cvSettings.cardElevation = 10f
         }
     }
 
     private fun setListeners(){
         btnSearch.setOnClickListener(){
             cvSearch.cardElevation = 10f
+            cvCreateTournament.cardElevation = 0f
             cvProfile.cardElevation = 0f
-            cvCreateTournament.cardElevation = 0f
+            cvSettings.cardElevation = 0f
+
             startActivity(Intent(requireContext(), SearchActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
-        }
-        btnProfile.setOnClickListener(){
-            cvSearch.cardElevation = 0f
-            cvProfile.cardElevation = 10f
-            cvCreateTournament.cardElevation = 0f
-            startActivity(Intent(requireContext(), PlayerActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
         }
         btnCreateTournament.setOnClickListener(){
             cvSearch.cardElevation = 0f
-            cvProfile.cardElevation = 0f
             cvCreateTournament.cardElevation = 10f
+            cvProfile.cardElevation = 0f
+            cvSettings.cardElevation = 0f
 
-            startActivity(Intent(requireContext(), TournamentActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            startActivity(Intent(requireContext(), CreateTournamentActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+        }
+        btnProfile.setOnClickListener(){
+            cvSearch.cardElevation = 0f
+            cvCreateTournament.cardElevation = 0f
+            cvProfile.cardElevation = 10f
+            cvSettings.cardElevation = 0f
+
+            startActivity(Intent(requireContext(), PlayerActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+        }
+        btnSettings.setOnClickListener(){
+            cvSearch.cardElevation = 0f
+            cvCreateTournament.cardElevation = 0f
+            cvProfile.cardElevation = 0f
+            cvSettings.cardElevation = 10f
+
+            startActivity(Intent(requireContext(), SettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
         }
     }
 }

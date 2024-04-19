@@ -4,10 +4,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Error Messages -->
+    <string name="errorEmptyField">Can\'t be empty</string>
+    <string name="errorNotValidEmail">Not valid email</string>
+    <string name="errorAlreadyInUse">Already in use</string>
+    <string name="errorEmailNotRegistered">Email not registered</string>
+    <string name="errorTooShort">Too short</string>
+    <string name="errorTooLong">Too long</string>
+    <string name="errorNoDescription">No description added...</string>
+    <string name="errorNoAccount">No account added...</string>
+    <string name="errorNoContact">No contact added...</string>
+    <string name="errorNoTeam">No team added...</string>
+
     <!-- Login y Register -->
     <string name="etLoginEmailHint">Email...</string>
     <string name="etLoginPasswordHint">Password...</string>
-    <string name="btnLogIn">LogIn</string>
+    <string name="btnLogIn">Log In</string>
     <string name="tvNoAccLogin">No account? Click HERE</string>
     <string name="etRegisterNameHint">Nickname (Max. 16)</string>
     <string name="etRegisterEmailHint">Email</string>
@@ -22,7 +34,17 @@
     <string name="tvPTeamTitle">Team</string>
 
     <!-- Team profile -->
+    <string name="tvTTeamSubtitle">Team</string>
+    <string name="tvTDescriptionTitle">Description</string>
+    <string name="tvTAdminTitle">Main Manager</string>
+    <string name="tvTRosterTitle">Roster</string>
+
 
     <!-- Tournament profile -->
+
+    <!-- Search Activity-->
+    <string name="btnShowPlayers">Players</string>
+    <string name="btnShowTeams">Teams</string>
+    <string name="btnShowTournaments">Events</string>
 
 </resources>

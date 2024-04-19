@@ -23,6 +23,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/ivPImage"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
             <TextView
                 android:id="@+id/tvPName"
                 android:layout_width="0dp"
@@ -36,12 +43,22 @@
                 app:layout_constraintStart_toEndOf="@+id/ivPImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/ivPImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/btn_dialog" />
+            <TextView
+                android:id="@+id/tvPStaff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="@+id/tvPName"
+                app:layout_constraintTop_toBottomOf="@+id/tvPName" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/tvPDescriptionTitle"
+                app:layout_constraintBottom_toTopOf="@+id/tvPDescription"
+                app:layout_constraintStart_toStartOf="@+id/tvPDescription" />
 
             <TextView
                 android:id="@+id/tvPDescription"
@@ -52,15 +69,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivPImage" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvPDescriptionTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvPDescription"
-                app:layout_constraintStart_toStartOf="@+id/tvPDescription" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -100,40 +108,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPAccount" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvPTeamTitle"
-                app:layout_constraintBottom_toTopOf="@+id/ivPTeam"
-                app:layout_constraintStart_toStartOf="@+id/tvPContact" />
-
-            <ImageView
-                android:id="@+id/ivPTeam"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintTeam"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:srcCompat="@android:drawable/btn_dialog" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/tvPTeam"
-                android:layout_width="201dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="20dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/ivPTeam"
-                app:layout_constraintStart_toEndOf="@+id/ivPTeam"
-                app:layout_constraintTop_toTopOf="@+id/ivPTeam" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvPTeamTitle"
+                    app:layout_constraintBottom_toTopOf="@+id/ivPTeam"
+                    app:layout_constraintStart_toStartOf="@+id/ivPTeam" />
 
-            <TextView
-                android:id="@+id/tvPStaff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/tvPName"
-                app:layout_constraintTop_toBottomOf="@+id/tvPName" />
+                <ImageView
+                    android:id="@+id/ivPTeam"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginStart="25dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/btn_dialog" />
+
+                <TextView
+                    android:id="@+id/tvPTeam"
+                    android:layout_width="201dp"
+                    android:layout_height="23dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivPTeam"
+                    app:layout_constraintTop_toTopOf="@+id/ivPTeam" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/btnPEdit"

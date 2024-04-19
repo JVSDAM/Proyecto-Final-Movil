@@ -18,9 +18,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvSearch"
-            android:layout_width="135dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="-10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="?android:attr/colorBackground"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp">
@@ -28,8 +29,28 @@
             <ImageButton
                 android:id="@+id/btnSearch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#00FFFFFF"
+                android:layout_height="110dp"
+                android:backgroundTint="#00FFFFFF"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/btn_dialog" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvCreateTournament"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-10dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="?android:attr/colorBackground"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp">
+
+            <ImageButton
+                android:id="@+id/btnCreateTournament"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:backgroundTint="#00FFFFFF"
                 android:padding="30dp"
                 android:scaleType="fitCenter"
                 android:src="@android:drawable/btn_dialog" />
@@ -38,11 +59,12 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvProfile"
-            android:layout_width="136dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:layout_marginBottom="-10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="?android:attr/colorBackground"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp">
@@ -50,30 +72,31 @@
             <ImageButton
                 android:id="@+id/btnProfile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="110dp"
                 android:background="#00FFFFFF"
                 android:padding="30dp"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/btn_dialog" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvCreateTournament"
-            android:layout_width="136dp"
+            android:id="@+id/cvSettings"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
             android:layout_marginBottom="-10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="?android:attr/colorBackground"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp">
 
             <ImageButton
-                android:id="@+id/btnCreateTournament"
+                android:id="@+id/btnSettings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#00FFFFFF"
                 android:padding="30dp"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@android:drawable/btn_dialog" />
         </androidx.cardview.widget.CardView>
 
