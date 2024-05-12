@@ -14,11 +14,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proyectofinalmovil.adapters.PlayerAdapter
 import com.example.proyectofinalmovil.adapters.TeamAdapter
+import com.example.proyectofinalmovil.adapters.TournamentAdapter
 import com.example.proyectofinalmovil.databinding.ActivitySearchBinding
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
+import com.example.proyectofinalmovil.models.Tournament
 import com.example.proyectofinalmovil.viewmodel.PlayersViewModel
 import com.example.proyectofinalmovil.viewmodel.TeamsViewModel
+import com.example.proyectofinalmovil.viewmodel.TournamentsViewModel
 
 
 class SearchActivity : AppCompatActivity() {
@@ -29,6 +32,9 @@ class SearchActivity : AppCompatActivity() {
 
     private val teamsVM: TeamsViewModel by viewModels()
     val teamAdapter = TeamAdapter(mutableListOf(), { team -> showTeamInformation(team) })
+
+    private val tournamentsVM: TournamentsViewModel by viewModels()
+    val tournamentAdapter = TournamentAdapter(mutableListOf(), { tournament -> showTournamentInformation(tournament) })
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +61,15 @@ class SearchActivity : AppCompatActivity() {
             teamAdapter.notifyDataSetChanged()
         }
 
+        tournamentsVM.tournamentList.observe(this) {
+            tournamentAdapter.list = it
+            tournamentAdapter.notifyDataSetChanged()
+        }
+
         changeRecycler(1)
         playersVM.searchPlayers("")
         teamsVM.searchTeams("")
+        tournamentsVM.searchTournaments("")
     }
 
 
@@ -93,6 +105,10 @@ class SearchActivity : AppCompatActivity() {
         val teamLayoutManager = LinearLayoutManager(this)
         binding.teamsRecycler.layoutManager = teamLayoutManager
         binding.teamsRecycler.adapter = teamAdapter
+
+        val tournamentLayoutManager = LinearLayoutManager(this)
+        binding.tournamentsRecycler.layoutManager = tournamentLayoutManager
+        binding.tournamentsRecycler.adapter = tournamentAdapter
     }
 
     private fun setListeners() {
@@ -108,6 +124,9 @@ class SearchActivity : AppCompatActivity() {
                 teamsVM.searchTeams(
                     binding.searchView.query.toString().lowercase().replace(" ", "_")
                 )
+                tournamentsVM.searchTournaments(
+                    binding.searchView.query.toString().lowercase().replace(" ", "_")
+                )
                 return true
             }
         })
@@ -120,6 +139,10 @@ class SearchActivity : AppCompatActivity() {
         binding.btnShowTournaments.setOnClickListener(){
             changeRecycler(3)
         }
+
+        /*binding.toggleButton.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+
+        }*/
     }
 
     private fun showPlayerInformation(player: Player) {
@@ -132,11 +155,25 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showTeamInformation(team: Team) {
-        Log.d("Enviando datos", "a PLAYER PROFILE de " + team.name)
-        val i = Intent(this, PlayerActivity::class.java).apply {
-            putExtra("PLAYER", team)
+        Log.d("Enviando datos", "a TEAM PROFILE de " + team.name)
+        val i = Intent(this, TeamActivity::class.java).apply {
+            putExtra("TEAM", team)
         }
 
         startActivity(i)
+    }
+
+    private fun showTournamentInformation(tournament: Tournament) {
+        Log.d("Enviando datos", "a TOURNAMENT PROFILE de " + tournament.name)
+        val i = Intent(this, TournamentActivity::class.java).apply {
+            putExtra("TOURNAMENT", tournament)
+        }
+
+        startActivity(i)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, PlayerActivity::class.java))
     }
 }

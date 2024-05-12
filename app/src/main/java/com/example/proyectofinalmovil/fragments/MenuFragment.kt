@@ -8,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
-import com.example.proyectofinalmovil.CreateTournamentActivity
+import com.example.proyectofinalmovil.CreateActivity
 import com.example.proyectofinalmovil.PlayerActivity
 import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.SearchActivity
 import com.example.proyectofinalmovil.SettingsActivity
-import com.example.proyectofinalmovil.TournamentActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,7 +73,7 @@ class MenuFragment : Fragment() {
         if(this.activity is SearchActivity){
             cvSearch.cardElevation = 10f
         }
-        if(this.activity is CreateTournamentActivity){
+        if(this.activity is CreateActivity){
             cvCreateTournament.cardElevation = 10f
         }
         if(this.activity is PlayerActivity){
@@ -100,7 +99,7 @@ class MenuFragment : Fragment() {
             cvProfile.cardElevation = 0f
             cvSettings.cardElevation = 0f
 
-            startActivity(Intent(requireContext(), CreateTournamentActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            startActivity(Intent(requireContext(), CreateActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
         }
         btnProfile.setOnClickListener(){
             cvSearch.cardElevation = 0f

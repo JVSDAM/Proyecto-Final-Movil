@@ -1,12 +1,14 @@
 package com.example.proyectofinalmovil
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.activity.contextaware.withContextAvailable
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,12 +20,14 @@ import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.provider.ApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
+    //val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+    lateinit var shared: SharedPreferences
 
     var nameRegisterOk = false
     var emailRegisterOk = false
@@ -43,8 +47,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        shared = getSharedPreferences("Test", Context.MODE_PRIVATE)
+
+        Log.d("Id shared", shared.getString("id", "").toString())
+
+        checkSharedPreferences(shared.getString("id", "").toString())
         prepareForm()
         setListeners()
+    }
+
+    private fun checkSharedPreferences(sharedId: String) {
+        if (sharedId != "") {
+            CoroutineScope(Dispatchers.IO).launch {
+                var results = ApiClient.apiClient.getPlayersById(sharedId)
+                Session.player = results
+                Log.d("Usuario que se logea", Session.player.name)
+                joinApp()
+            }
+        }
     }
 
     private fun prepareForm() {
@@ -72,48 +92,44 @@ class MainActivity : AppCompatActivity() {
                 checkBtnRegisterEnabled()
             }
         }
-        binding.etRegisterEmail.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus == false) {
-                emailRegisterOk = true
+        binding.etRegisterEmail.addTextChangedListener {
+            emailRegisterOk = true
 
-                if (binding.etRegisterEmail.text.toString() == "") {
-                    binding.etRegisterEmail.error = getText(R.string.errorEmptyField)
-                    emailRegisterOk = false
+            if (binding.etRegisterEmail.text.toString() == "") {
+                binding.etRegisterEmail.error = getText(R.string.errorEmptyField)
+                emailRegisterOk = false
+            } else {
+                if (!Patterns.EMAIL_ADDRESS.matcher(
+                        binding.etRegisterEmail.text.toString().trim()
+                    ).matches()
+                ) {
+                    binding.etRegisterEmail.error = getText(R.string.errorNotValidEmail)
+                    emailLoginOk = false
                 } else {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(
-                            binding.etRegisterEmail.text.toString().trim()
-                        ).matches()
-                    ) {
-                        binding.etRegisterEmail.error = getText(R.string.errorNotValidEmail)
-                        emailLoginOk = false
-                    } else {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            val result =
-                                ApiClient.apiClient.getPlayerByEmail(binding.etRegisterEmail.text.toString())
-                            Log.d("Resultadito", result.players.toString())
-                            if (result.players.size > 0) {
-                                binding.etRegisterEmail.error =
-                                    getText(R.string.errorAlreadyInUse)
-                                emailRegisterOk = false
-                            }
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val result =
+                            ApiClient.apiClient.getPlayerByEmail(binding.etRegisterEmail.text.toString())
+                        Log.d("Resultadito", result.players.toString())
+                        if (result.players.size > 0) {
+                            binding.etRegisterEmail.error =
+                                getText(R.string.errorAlreadyInUse)
+                            emailRegisterOk = false
                         }
                     }
-
-                    checkBtnRegisterEnabled()
-                }
-            }
-        }
-        binding.etRegisterPassword.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus == false) {
-                passwordRegisterOk = true
-
-                if (binding.etRegisterPassword.text.toString().length < 6) {
-                    binding.etRegisterPassword.error = getText(R.string.errorTooShort)
-                    passwordRegisterOk = false
                 }
 
                 checkBtnRegisterEnabled()
             }
+        }
+        binding.etRegisterPassword.addTextChangedListener {
+            passwordRegisterOk = true
+
+            if (binding.etRegisterPassword.text.toString().length < 6) {
+                binding.etRegisterPassword.error = getText(R.string.errorTooShort)
+                passwordRegisterOk = false
+            }
+
+            checkBtnRegisterEnabled()
         }
         binding.btnRegister.setOnClickListener {
             readRegisterForm()
@@ -123,46 +139,45 @@ class MainActivity : AppCompatActivity() {
             binding.clLogin.visibility = View.VISIBLE
         }
 
-        binding.etLoginEmail.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus == false) {
-                emailLoginOk = true
+        binding.etLoginEmail.addTextChangedListener {
+            emailLoginOk = true
 
-                if (binding.etLoginEmail.text.toString() == "") {
-                    binding.etLoginEmail.error = getText(R.string.errorEmptyField)
+            if (binding.etLoginEmail.text.toString() == "") {
+                binding.etLoginEmail.error = getText(R.string.errorEmptyField)
+                emailLoginOk = false
+            } else {
+                if (!Patterns.EMAIL_ADDRESS.matcher(binding.etLoginEmail.text.toString().trim())
+                        .matches()
+                ) {
+                    binding.etLoginEmail.error = getText(R.string.errorNotValidEmail)
                     emailLoginOk = false
                 } else {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(binding.etLoginEmail.text.toString().trim())
-                            .matches()
-                    ) {
-                        binding.etLoginEmail.error = getText(R.string.errorNotValidEmail)
-                        emailLoginOk = false
-                    } else {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            val result =
-                                ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString())
-                            Log.d("Resultadito", result.players.toString())
-                            if (result.players.size < 1) {
-                                binding.etLoginEmail.error = getText(R.string.errorEmailNotRegistered)
-                                emailLoginOk = false
-                            }
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val result =
+                            ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString())
+                        Log.d("Resultadito", result.players.toString())
+                        if (result.players.size < 1) {
+                            binding.etLoginEmail.error = getText(R.string.errorEmailNotRegistered)
+                            emailLoginOk = false
                         }
                     }
-
-                    checkBtnLoginEnabled()
                 }
+
+
             }
+
+            checkBtnLoginEnabled()
         }
-        binding.etLoginPassword.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus == false) {
-                passwordLoginOk = true
 
-                if (binding.etLoginPassword.text.toString().length < 6) {
-                    binding.etLoginPassword.error = getText(R.string.errorTooShort)
-                    passwordLoginOk = false
-                }
+        binding.etLoginPassword.addTextChangedListener {
+            passwordLoginOk = true
 
-                checkBtnLoginEnabled()
+            if (binding.etLoginPassword.text.toString().length < 6) {
+                binding.etLoginPassword.error = getText(R.string.errorTooShort)
+                passwordLoginOk = false
             }
+
+            checkBtnLoginEnabled()
         }
         binding.btnLogin.setOnClickListener {
             readLoginForm()
@@ -171,6 +186,12 @@ class MainActivity : AppCompatActivity() {
             binding.clLogin.visibility = View.GONE
             binding.clRegister.visibility = View.VISIBLE
         }
+
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
     }
 
     private fun checkBtnRegisterEnabled() {
@@ -186,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             Player(
                 id = null,
                 image = null,
-                name = binding.etRegisterName.text.toString().lowercase(),
+                name = binding.etRegisterName.text.toString().lowercase().replace(" ", "_"),
                 email = binding.etRegisterEmail.text.toString(),
                 password = binding.etRegisterPassword.text.toString(),
                 staff = null,
@@ -212,15 +233,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyLogIn() {
-        Toast.makeText(this, "Logging in to the app...", Toast.LENGTH_SHORT).show()
         CoroutineScope(Dispatchers.IO).launch {
             var results = ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString())
             if (results.players.size == 1) {
 
                 if (results.players[0].password == binding.etLoginPassword.text.toString()) {
+                    //Toast.makeText(this@MainActivity, "Logging in to the app...", Toast.LENGTH_SHORT).show()
+                    binding.etLoginPassword
                     Session.player = results.players[0]
                     Log.d("Usuario que se logea", results.players.toString())
+
+                    val sharedEmail = shared.edit()
+                    sharedEmail.putString("id", results.players[0].id).apply()
+                    Log.d("Id shared", shared.getString("id", "No user id").toString())
                     joinApp()
+                } else {
+                    /*Toast.makeText(this@MainActivity, "Incorrect password", Toast.LENGTH_SHORT)
+                        .show()*/
                 }
             }
         }

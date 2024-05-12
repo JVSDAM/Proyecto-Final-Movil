@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowTeams" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamsRecycler"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowTeams" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tournamentsRecycler"
@@ -42,9 +42,43 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowTeams" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
-    <Button
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <Button
+            android:id="@+id/btnShowPlayers"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnShowPlayers" />
+
+        <Button
+            android:id="@+id/btnShowTeams"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnShowTeams" />
+
+        <Button
+            android:id="@+id/btnShowTournaments"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnShowTournaments" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <!--<Button
         android:id="@+id/btnShowPlayers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -73,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnShowTeams"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"

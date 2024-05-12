@@ -20,8 +20,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPShow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/ivPImage"
@@ -112,6 +114,7 @@
                 android:id="@+id/constraintTeam"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -144,17 +147,150 @@
                     app:layout_constraintTop_toTopOf="@+id/ivPTeam" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnPEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="20dp"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/tvPContact"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <!-- <Button
                 android:id="@+id/btnPEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Button"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/tvPContact"
-                app:layout_constraintTop_toBottomOf="@+id/tvPContact" />
+                app:layout_constraintTop_toBottomOf="@+id/tvPContact" />-->
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btnKickPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:text="@string/btnKickPlayer"
+                app:elevation="0dp"
+                app:icon="@android:drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="@+id/btnPEdit"
+                app:layout_constraintEnd_toEndOf="@+id/tvPContact"
+                app:layout_constraintTop_toTopOf="@+id/btnPEdit" />
+            <!--<Button
+                android:id="@+id/btnKickPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnKickPlayer"
+                app:layout_constraintBottom_toBottomOf="@+id/btnPEdit"
+                app:layout_constraintEnd_toEndOf="@+id/tvPContact" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/etPEditName"
+                android:layout_width="300dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/etTEditNameHint"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPEditImage" />
+
+            <EditText
+                android:id="@+id/etPEditDescription"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/etTEditDescriptionHint"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="@+id/etPEditName"
+                app:layout_constraintStart_toStartOf="@+id/etPEditName"
+                app:layout_constraintTop_toBottomOf="@+id/cbPEditStaff" />
+
+
+            <ImageView
+                android:id="@+id/ivPEditImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <Button
+                android:id="@+id/btnPEditImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnTEditImage"
+                app:layout_constraintBottom_toBottomOf="@+id/ivPEditImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivPEditImage"
+                app:layout_constraintTop_toTopOf="@+id/ivPEditImage" />
+
+            <Button
+                android:id="@+id/btnPConfirmEdit"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/btnTConfirmEdit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPEditContact" />
+
+            <Button
+                android:id="@+id/btnPBackEdit"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btnTBackEdit"
+                app:layout_constraintBottom_toBottomOf="@+id/btnPConfirmEdit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnPConfirmEdit" />
+
+            <CheckBox
+                android:id="@+id/cbPEditStaff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/cbPEditStaff"
+                app:layout_constraintStart_toStartOf="@+id/etPEditName"
+                app:layout_constraintTop_toBottomOf="@+id/etPEditName" />
+
+            <EditText
+                android:id="@+id/etPEditAccount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/etPEditAccountHint"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="@+id/etPEditDescription"
+                app:layout_constraintStart_toStartOf="@+id/etPEditDescription"
+                app:layout_constraintTop_toBottomOf="@+id/etPEditDescription" />
+
+            <EditText
+                android:id="@+id/etPEditContact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/etPEditContactHint"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="@+id/etPEditAccount"
+                app:layout_constraintStart_toStartOf="@+id/etPEditAccount"
+                app:layout_constraintTop_toBottomOf="@+id/etPEditAccount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.fragment.app.FragmentContainerView

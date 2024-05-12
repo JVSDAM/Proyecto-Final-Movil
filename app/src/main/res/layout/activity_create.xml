@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateActivity">
+
+    <Button
+        android:id="@+id/btnFormTeam"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFE1C53A"
+        android:text="Create Team"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <Button
+        android:id="@+id/btnFormTournament"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFE1C53A"
+        android:text="@string/btnCreateTournament"
+        app:layout_constraintStart_toEndOf="@+id/btnFormTeam" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFormTeam">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCTeam"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/tvNewTeam"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etCTName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/etTeamNameHint"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/ivCTeam"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivCTeam"
+                app:layout_constraintTop_toTopOf="@+id/ivCTeam" />
+
+            <EditText
+                android:id="@+id/etCTDescription"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:hint="@string/etTeamDescriptionHint"
+                android:inputType="text"
+                android:singleLine="false"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCTName" />
+
+            <ImageView
+                android:id="@+id/ivCTeam"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:src="@android:drawable/btn_dialog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <Button
+                android:id="@+id/btnCTeam"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFE1C53A"
+                android:text="@string/btnCreate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCTDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCTournament"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tvNewTournament"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivCTournament"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:src="@android:drawable/btn_dialog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <EditText
+                android:id="@+id/etCToName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/etTournamentNameHint"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/ivCTournament"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivCTournament"
+                app:layout_constraintTop_toTopOf="@+id/ivCTournament" />
+
+            <EditText
+                android:id="@+id/etCToDescription"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:hint="@string/etTournamentDescriptionHint"
+                android:inputType="text"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCToName" />
+
+            <EditText
+                android:id="@+id/etCToPrize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:hint="@string/etTournamentPrizeHint"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCToDescription" />
+
+            <Button
+                android:id="@+id/btnCTournament"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnCreate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCToPrize" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView4"
+        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

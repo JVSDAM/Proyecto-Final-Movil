@@ -1,5 +1,6 @@
 package com.example.proyectofinalmovil
 
+import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.proyectofinalmovil.companions.Session
 import com.example.proyectofinalmovil.databinding.ActivityPlayerBinding
@@ -22,6 +24,15 @@ import kotlinx.coroutines.launch
 class PlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerBinding
     private lateinit var loadedPlayer: Player
+    private lateinit var team: Team
+
+    private var inYourTeam = false
+
+    private var namePOk = true
+    private var descPOk = true
+    private var accountPOk = true
+    private var contactPOk = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,26 +44,34 @@ class PlayerActivity : AppCompatActivity() {
             insets
         }
 
-        /*
-        *  Para actualizar
-        *             CoroutineScope(Dispatchers.IO).launch{
-                var results = ApiClient.apiClient.getPlayersById(loadedPlayer.id)
-                Session.player = results.players[0]
-            }
-        * */
-
         loadPlayer()
         fillInterface()
+        setListeners()
     }
 
     private fun loadPlayer(){
         if(intent.hasExtra("PLAYER")) {
             loadedPlayer = intent.getSerializableExtra("PLAYER") as Player
-            binding.btnPEdit.visibility = View.GONE
-            Log.d("Loaded player", loadedPlayer.toString())
+            checkInYourTeam()
         }else{
+            Session.update()
             loadedPlayer = Session.player
-            binding.btnPEdit.visibility = View.VISIBLE
+        }
+        Log.d("Loaded player", loadedPlayer.toString())
+    }
+
+    private fun checkInYourTeam(){
+        if(Session.player.teamId.toString() != "" && Session.player.teamId.toString() != null) {
+            if (loadedPlayer.teamId.toString() != "" && loadedPlayer.teamId.toString() != null) {
+                if(loadedPlayer.teamId.toString() == Session.player.teamId.toString()){
+                    CoroutineScope(Dispatchers.IO).launch{
+                        var yourTeam = ApiClient.apiClient.getTeamsById(Session.player.teamId.toString())
+                        if (yourTeam.adminId == Session.player.id){
+                            inYourTeam = true
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -84,23 +103,14 @@ class PlayerActivity : AppCompatActivity() {
             binding.tvPContact.text = getText(R.string.errorNoContact)
         }
 
-        if (Session.player.teamId != "") {
+        binding.btnPEdit.visibility = View.GONE
+        if(loadedPlayer.id == Session.player.id){
+            binding.btnPEdit.visibility = View.VISIBLE
+        }
+
+        if (loadedPlayer.teamId != "") {
             CoroutineScope(Dispatchers.IO).launch {
-                var team = ApiClient.apiClient.getTeamsById(loadedPlayer.teamId.toString())
-                //TODO tengo que llamar esto desde el metodo principal para cargar la imagen
-                /*val futureTarget: FutureTarget<Bitmap> = Glide.with(context)
-    .asBitmap()
-    .load(imageUrl)
-    .submit(width, height)
-
-// Do something with the Bitmap (e.g., display it in an ImageView)
-val bitmap: Bitmap? = futureTarget.get()
-
-// When you're done with the Bitmap, clear the target
-Glide.with(context).clear(futureTarget)
-
-Probar a implementar este sistema
-*/
+                team = ApiClient.apiClient.getTeamsById(loadedPlayer.teamId.toString())
                 //Glide.with(binding.ivPTeam.context).load(team.image).into(binding.ivPTeam)
                 binding.tvPTeam.text = team.name
                 Log.d("Equipo cargado", team.toString())
@@ -108,9 +118,135 @@ Probar a implementar este sistema
 
 
         } else {
-            binding.tvPTeam.text = getText(R.string.errorNoTeam)
+            binding.constraintTeam.visibility = View.GONE
         }
 
+        binding.etPEditName.setText(loadedPlayer.name)
+
+        binding.cbPEditStaff.isChecked = loadedPlayer.staff!!
+
+        binding.etPEditDescription.setText(loadedPlayer.description)
+
+        binding.etPEditAccount.setText(loadedPlayer.account)
+
+        binding.etPEditContact.setText(loadedPlayer.contact)
+
+        if(inYourTeam == true){
+            binding.btnKickPlayer.visibility = View.VISIBLE
+            binding.btnKickPlayer.text = "Leave Team"
+        }else{
+            binding.btnKickPlayer.visibility = View.GONE
+            binding.btnKickPlayer.text = "Join Team"
+        }
+    }
+
+    private fun loadTeamImage(){
+        Glide.with(binding.ivPTeam.context).load(team.image).into(binding.ivPTeam)
+    }
+
+    private fun setListeners(){
+        binding.constraintTeam.setOnClickListener(){
+            if(loadedPlayer.teamId != null){
+                val i = Intent(this, TeamActivity::class.java).apply {
+                    putExtra("TEAM", team)
+                }
+                startActivity(i)
+            }
+        }
+
+        binding.btnPEdit.setOnClickListener(){
+            binding.clPShow.visibility = View.GONE
+            binding.clPEdit.visibility = View.VISIBLE
+        }
+
+        binding.etPEditName.addTextChangedListener {
+            namePOk = true
+
+            if (binding.etPEditName.text.toString() == "") {
+                binding.etPEditName.error = getText(R.string.errorEmptyField)
+                namePOk = false
+            } else {
+                if (binding.etPEditName.text.toString().length > 16) {
+                    binding.etPEditName.error = getText(R.string.errorTooLong)
+                    namePOk = false
+                }
+            }
+
+            checkBtnPConfirmEditEnabled()
+        }
+
+        binding.etPEditDescription.addTextChangedListener {
+            descPOk = true
+
+            if (binding.etPEditDescription.text.toString().length > 60) {
+                binding.etPEditDescription.error = getText(R.string.errorTooLong)
+                descPOk = false
+            }
+
+            checkBtnPConfirmEditEnabled()
+        }
+
+        binding.etPEditAccount.addTextChangedListener {
+            accountPOk = true
+
+            if (binding.etPEditAccount.text.toString().length > 22) {
+                binding.etPEditAccount.error = getText(R.string.errorTooLong)
+                namePOk = false
+            }
+
+
+            checkBtnPConfirmEditEnabled()
+        }
+
+        binding.etPEditContact.addTextChangedListener {
+            contactPOk = true
+            if (binding.etPEditName.text.toString().length > 22) {
+                binding.etPEditName.error = getText(R.string.errorTooLong)
+                namePOk = false
+            }
+
+            checkBtnPConfirmEditEnabled()
+        }
+
+        binding.btnPConfirmEdit.setOnClickListener(){
+            CoroutineScope(Dispatchers.IO).launch {
+                var editedPlayer = loadedPlayer
+
+                editedPlayer.name = binding.etPEditName.text.toString()
+                editedPlayer.description = binding.etPEditDescription.text.toString()
+                editedPlayer.staff = binding.cbPEditStaff.isChecked
+                editedPlayer.account = binding.etPEditAccount.text.toString()
+                editedPlayer.contact = binding.etPEditContact.text.toString()
+
+
+                ApiClient.apiClient.putPlayersById(editedPlayer.id.toString(), editedPlayer)
+                loadedPlayer = ApiClient.apiClient.getPlayersById(editedPlayer.id.toString())
+
+                startActivity(Intent(this@PlayerActivity,PlayerActivity::class.java).apply {
+                    putExtra("PLAYER", loadedPlayer)
+                })
+            }
+        }
+
+        binding.btnPBackEdit.setOnClickListener(){
+            binding.clPShow.visibility = View.VISIBLE
+            binding.clPEdit.visibility = View.GONE
+        }
+    }
+
+    private fun checkBtnPConfirmEditEnabled(){
+        binding.btnPConfirmEdit.isEnabled = namePOk && descPOk && accountPOk && contactPOk
+        Log.d(binding.btnPConfirmEdit.isEnabled.toString(), namePOk.toString() + descPOk.toString() + accountPOk.toString() + contactPOk.toString())
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(intent.hasExtra("PLAYER")) {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }else{
+            super.onBackPressed()
+            finishAffinity()
+        }
 
     }
 }
