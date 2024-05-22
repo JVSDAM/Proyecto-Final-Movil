@@ -7,117 +7,120 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPShow"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:contentPadding="20dp"
+        android:padding="20dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clPShow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
+        <ImageView
+            android:id="@+id/ivPImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_dialog" />
 
-            <ImageView
-                android:id="@+id/ivPImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/btn_dialog" />
+        <TextView
+            android:id="@+id/tvPName"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="20dp"
+            android:text="TextView"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivPImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvPName"
-                android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="20dp"
-                android:text="TextView"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivPImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivPImage"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvPStaff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/tvPName"
+            app:layout_constraintTop_toBottomOf="@+id/tvPName" />
 
-            <TextView
-                android:id="@+id/tvPStaff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/tvPName"
-                app:layout_constraintTop_toBottomOf="@+id/tvPName" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/tvPDescriptionTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvPDescription"
+            app:layout_constraintStart_toStartOf="@+id/tvPDescription" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvPDescriptionTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvPDescription"
-                app:layout_constraintStart_toStartOf="@+id/tvPDescription" />
+        <TextView
+            android:id="@+id/tvPDescription"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="45dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivPImage" />
 
-            <TextView
-                android:id="@+id/tvPDescription"
-                android:layout_width="300dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="45dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivPImage" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/tvPAccountTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvPAccount"
+            app:layout_constraintStart_toStartOf="@+id/tvPAccount" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvPAccountTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvPAccount"
-                app:layout_constraintStart_toStartOf="@+id/tvPAccount" />
+        <TextView
+            android:id="@+id/tvPAccount"
+            android:layout_width="300dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="45dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPDescription" />
 
-            <TextView
-                android:id="@+id/tvPAccount"
-                android:layout_width="300dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="45dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPDescription" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/tvPContactTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvPContact"
+            app:layout_constraintStart_toStartOf="@+id/tvPContact" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvPContactTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvPContact"
-                app:layout_constraintStart_toStartOf="@+id/tvPContact" />
+        <TextView
+            android:id="@+id/tvPContact"
+            android:layout_width="300dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="45dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPAccount" />
 
-            <TextView
-                android:id="@+id/tvPContact"
-                android:layout_width="300dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="45dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPAccount" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvShowTeam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:contentPadding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnKickInvitePlayer"
+            app:layout_constraintStart_toStartOf="@+id/btnPEdit">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintTeam"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -131,7 +134,6 @@
                     android:id="@+id/ivPTeam"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:layout_marginStart="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@android:drawable/btn_dialog" />
@@ -140,158 +142,153 @@
                     android:id="@+id/tvPTeam"
                     android:layout_width="201dp"
                     android:layout_height="23dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivPTeam"
                     app:layout_constraintTop_toTopOf="@+id/ivPTeam" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnPEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginTop="20dp"
-                app:elevation="0dp"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/tvPContact"
-                app:srcCompat="@android:drawable/ic_menu_edit" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="20dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:tint="?android:attr/textColorSecondary"
+            app:elevation="0dp"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/tvPContact"
+            app:srcCompat="@android:drawable/ic_dialog_email" />
 
-            <!-- <Button
-                android:id="@+id/btnPEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Button"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="@+id/tvPContact"
-                app:layout_constraintTop_toBottomOf="@+id/tvPContact" />-->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btnKickInvitePlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="20dp"
+            android:text="@string/btnKickPlayer"
+            android:textColor="?android:attr/textColorSecondary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:elevation="0dp"
+            app:icon="@android:drawable/ic_delete"
+            app:iconTint="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="@+id/tvPContact"
+            app:layout_constraintTop_toBottomOf="@+id/tvPContact" />
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/btnKickPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:text="@string/btnKickPlayer"
-                app:elevation="0dp"
-                app:icon="@android:drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="@+id/btnPEdit"
-                app:layout_constraintEnd_toEndOf="@+id/tvPContact"
-                app:layout_constraintTop_toTopOf="@+id/btnPEdit" />
-            <!--<Button
-                android:id="@+id/btnKickPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnKickPlayer"
-                app:layout_constraintBottom_toBottomOf="@+id/btnPEdit"
-                app:layout_constraintEnd_toEndOf="@+id/tvPContact" />-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clPEdit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPEdit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/clPShow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/etPEditName"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="25dp"
-                android:ems="10"
-                android:hint="@string/etTEditNameHint"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivPEditImage" />
+        <EditText
+            android:id="@+id/etPEditName"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/etTEditNameHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivPEditImage" />
 
-            <EditText
-                android:id="@+id/etPEditDescription"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="25dp"
-                android:ems="10"
-                android:hint="@string/etTEditDescriptionHint"
-                android:inputType="textMultiLine"
-                android:singleLine="false"
-                app:layout_constraintEnd_toEndOf="@+id/etPEditName"
-                app:layout_constraintStart_toStartOf="@+id/etPEditName"
-                app:layout_constraintTop_toBottomOf="@+id/cbPEditStaff" />
+        <EditText
+            android:id="@+id/etPEditDescription"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/etTEditDescriptionHint"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="@+id/etPEditName"
+            app:layout_constraintStart_toStartOf="@+id/etPEditName"
+            app:layout_constraintTop_toBottomOf="@+id/cbPEditStaff" />
 
 
-            <ImageView
-                android:id="@+id/ivPEditImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_dialog" />
+        <ImageView
+            android:id="@+id/ivPEditImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_dialog" />
 
-            <Button
-                android:id="@+id/btnPEditImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnTEditImage"
-                app:layout_constraintBottom_toBottomOf="@+id/ivPEditImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivPEditImage"
-                app:layout_constraintTop_toTopOf="@+id/ivPEditImage" />
+        <Button
+            android:id="@+id/btnPEditImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTEditImage"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPEditImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivPEditImage"
+            app:layout_constraintTop_toTopOf="@+id/ivPEditImage" />
 
-            <Button
-                android:id="@+id/btnPConfirmEdit"
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="@string/btnTConfirmEdit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPEditContact" />
+        <Button
+            android:id="@+id/btnPConfirmEdit"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/btnTConfirmEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPEditContact" />
 
-            <Button
-                android:id="@+id/btnPBackEdit"
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:text="@string/btnTBackEdit"
-                app:layout_constraintBottom_toBottomOf="@+id/btnPConfirmEdit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btnPConfirmEdit" />
+        <Button
+            android:id="@+id/btnPBackEdit"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTBackEdit"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPConfirmEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnPConfirmEdit" />
 
-            <CheckBox
-                android:id="@+id/cbPEditStaff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="@string/cbPEditStaff"
-                app:layout_constraintStart_toStartOf="@+id/etPEditName"
-                app:layout_constraintTop_toBottomOf="@+id/etPEditName" />
+        <CheckBox
+            android:id="@+id/cbPEditStaff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/cbPEditStaff"
+            app:layout_constraintStart_toStartOf="@+id/etPEditName"
+            app:layout_constraintTop_toBottomOf="@+id/etPEditName" />
 
-            <EditText
-                android:id="@+id/etPEditAccount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:ems="10"
-                android:hint="@string/etPEditAccountHint"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="@+id/etPEditDescription"
-                app:layout_constraintStart_toStartOf="@+id/etPEditDescription"
-                app:layout_constraintTop_toBottomOf="@+id/etPEditDescription" />
+        <EditText
+            android:id="@+id/etPEditAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/etPEditAccountHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/etPEditDescription"
+            app:layout_constraintStart_toStartOf="@+id/etPEditDescription"
+            app:layout_constraintTop_toBottomOf="@+id/etPEditDescription" />
 
-            <EditText
-                android:id="@+id/etPEditContact"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:ems="10"
-                android:hint="@string/etPEditContactHint"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="@+id/etPEditAccount"
-                app:layout_constraintStart_toStartOf="@+id/etPEditAccount"
-                app:layout_constraintTop_toBottomOf="@+id/etPEditAccount" />
+        <EditText
+            android:id="@+id/etPEditContact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/etPEditContactHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/etPEditAccount"
+            app:layout_constraintStart_toStartOf="@+id/etPEditAccount"
+            app:layout_constraintTop_toBottomOf="@+id/etPEditAccount" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

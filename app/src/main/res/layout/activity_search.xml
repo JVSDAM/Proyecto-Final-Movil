@@ -17,6 +17,30 @@
 
     </SearchView>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tlSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnShowPlayers" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnShowTeams" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnShowTournaments" />
+    </com.google.android.material.tabs.TabLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playerRecycler"
         android:layout_width="0dp"
@@ -24,7 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/tlSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamsRecycler"
@@ -33,7 +57,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/tlSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tournamentsRecycler"
@@ -42,9 +66,9 @@
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/tlSearch" />
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <!-- <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -77,7 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btnShowTournaments" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+    </com.google.android.material.button.MaterialButtonToggleGroup> -->
+
     <!--<Button
         android:id="@+id/btnShowPlayers"
         android:layout_width="0dp"

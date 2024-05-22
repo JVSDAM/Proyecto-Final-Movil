@@ -2,6 +2,8 @@ package com.example.proyectofinalmovil.provider
 
 import com.example.proyectofinalmovil.models.Inscription
 import com.example.proyectofinalmovil.models.InscriptionRes
+import com.example.proyectofinalmovil.models.Invite
+import com.example.proyectofinalmovil.models.InviteRes
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.PlayerRes
 import com.example.proyectofinalmovil.models.Team
@@ -75,9 +77,6 @@ interface ApiInterface {
     @POST("/inscriptions")
     suspend fun postInscriptions(@Body inscription: Inscription): Response<Inscription>
 
-    @GET("/inscriptions/{id}")
-    suspend fun getInscriptionsById(@Path("id") id: String): Inscription
-
     @GET("/inscriptions/team/{team_id}")
     suspend fun getInscriptionsByTeamId(@Path("team_id") teamId: String): InscriptionRes
 
@@ -86,4 +85,14 @@ interface ApiInterface {
 
     @DELETE("/inscriptions/id/{id}")
     suspend fun deleteInscriptionsById(@Path("id") id: String): Inscription
+
+    //INSCRIPTIONS
+    @POST("/invites")
+    suspend fun postInvites(@Body invite: Invite): Response<Invite>
+
+    @GET("/invites/player/{player_id}")
+    suspend fun getInvitesByPlayerId(@Path("player_id") teamId: String): InviteRes
+
+    @DELETE("/invites/id/{id}")
+    suspend fun deleteInvitesById(@Path("id") id: String): Invite
 }

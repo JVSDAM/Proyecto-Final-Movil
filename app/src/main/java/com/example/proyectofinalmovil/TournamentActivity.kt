@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -137,7 +138,7 @@ class TournamentActivity : AppCompatActivity() {
     }
 
     private fun setListeners(){
-        binding.constraintToAdmin.setOnClickListener(){
+        binding.cvShowToAdmin.setOnClickListener(){
             val i = Intent(this, PlayerActivity::class.java).apply {
                 putExtra("PLAYER", admin)
             }
@@ -237,6 +238,12 @@ class TournamentActivity : AppCompatActivity() {
             binding.clToShow.visibility = View.VISIBLE
             binding.clToEdit.visibility = View.GONE
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@TournamentActivity, SearchActivity::class.java))
+            }
+        })
     }
 
     private fun checkBtnToConfirmEditEnabled(){
@@ -256,10 +263,5 @@ class TournamentActivity : AppCompatActivity() {
         }
 
         startActivity(i)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, SearchActivity::class.java))
     }
 }

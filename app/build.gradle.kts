@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
+    //plugin de Sonarqube, para checkear la seguridad
+    id("org.sonarqube") version "5.0.0.4638"
 }
 
 android {
@@ -42,6 +45,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.junit.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,4 +63,11 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.2")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    //Material3 para la interfaz
+    implementation("com.google.android.material:material:1.12.0")
+    //Blurry para el fondo del login
+    implementation("jp.wasabeef:blurry:4.0.1")
+    //Espresso para los tests
+    implementation("androidx.test.espresso:espresso-core:3.5.1")
 }
+

@@ -1,11 +1,10 @@
 package com.example.proyectofinalmovil
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.proyectofinalmovil.companions.Session
 import com.example.proyectofinalmovil.databinding.ActivityPlayerBinding
+import com.example.proyectofinalmovil.models.Invite
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.provider.ApiClient
@@ -62,14 +62,30 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun checkInYourTeam(){
         if(Session.player.teamId.toString() != "" && Session.player.teamId.toString() != null) {
-            if (loadedPlayer.teamId.toString() != "" && loadedPlayer.teamId.toString() != null) {
-                if(loadedPlayer.teamId.toString() == Session.player.teamId.toString()){
-                    CoroutineScope(Dispatchers.IO).launch{
-                        var yourTeam = ApiClient.apiClient.getTeamsById(Session.player.teamId.toString())
-                        if (yourTeam.adminId == Session.player.id){
+
+            CoroutineScope(Dispatchers.IO).launch {
+                var yourTeam = ApiClient.apiClient.getTeamsById(Session.player.teamId.toString())
+                if (yourTeam.adminId == Session.player.id) {
+                    if (loadedPlayer.teamId.toString() != "" && loadedPlayer.teamId.toString() != null) {
+                        if (loadedPlayer.teamId.toString() == Session.player.teamId.toString()) {
                             inYourTeam = true
+                            binding.btnKickInvitePlayer.visibility = View.VISIBLE
+                            binding.btnKickInvitePlayer.text = "Kick Member"
                         }
+                    }else{
+                        Log.d("El otro NO tiene equipo", "")
+                        inYourTeam = false
+                        binding.btnKickInvitePlayer.visibility = View.VISIBLE
+                        binding.btnKickInvitePlayer.text = "Invite Member"
                     }
+                }
+            }
+
+            if (loadedPlayer.teamId.toString() != "" && loadedPlayer.teamId.toString() != null) {
+                Log.d("Tiene equipo", "")
+                if (loadedPlayer.teamId.toString() == Session.player.teamId.toString()) {
+                    Log.d("Es el mismo equipo", "")
+
                 }
             }
         }
@@ -115,11 +131,13 @@ class PlayerActivity : AppCompatActivity() {
                 binding.tvPTeam.text = team.name
                 Log.d("Equipo cargado", team.toString())
             }
-
-
         } else {
-            binding.constraintTeam.visibility = View.GONE
+            binding.cvShowTeam.visibility = View.GONE
         }
+
+        binding.btnKickInvitePlayer.visibility = View.GONE
+        binding.btnKickInvitePlayer.elevation = 0f
+
 
         binding.etPEditName.setText(loadedPlayer.name)
 
@@ -130,14 +148,6 @@ class PlayerActivity : AppCompatActivity() {
         binding.etPEditAccount.setText(loadedPlayer.account)
 
         binding.etPEditContact.setText(loadedPlayer.contact)
-
-        if(inYourTeam == true){
-            binding.btnKickPlayer.visibility = View.VISIBLE
-            binding.btnKickPlayer.text = "Leave Team"
-        }else{
-            binding.btnKickPlayer.visibility = View.GONE
-            binding.btnKickPlayer.text = "Join Team"
-        }
     }
 
     private fun loadTeamImage(){
@@ -145,7 +155,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun setListeners(){
-        binding.constraintTeam.setOnClickListener(){
+        binding.cvShowTeam.setOnClickListener(){
             if(loadedPlayer.teamId != null){
                 val i = Intent(this, TeamActivity::class.java).apply {
                     putExtra("TEAM", team)
@@ -232,21 +242,56 @@ class PlayerActivity : AppCompatActivity() {
             binding.clPShow.visibility = View.VISIBLE
             binding.clPEdit.visibility = View.GONE
         }
+
+        binding.btnKickInvitePlayer.setOnClickListener(){
+            if(inYourTeam){
+                CoroutineScope(Dispatchers.IO).launch {
+                    var newPlayer = loadedPlayer
+                    newPlayer.teamId = null
+                    ApiClient.apiClient.putPlayersById(loadedPlayer.id.toString(), newPlayer)
+
+                    startActivity(Intent(this@PlayerActivity,PlayerActivity::class.java).apply {
+                        putExtra("PLAYER", newPlayer)
+                    })
+                }
+            }else{
+                Log.d("Puedes invitar", "")
+                CoroutineScope(Dispatchers.IO).launch {
+                    var results = ApiClient.apiClient.getInvitesByPlayerId(loadedPlayer.id.toString())
+                    var canInvite = true
+                    for(invite in results.invites){
+                        if(invite.teamId == Session.player.teamId){
+                            canInvite = false
+                            binding.btnKickInvitePlayer.setText("Invite Pending")
+                            break
+                        }
+                    }
+
+                    if(canInvite){
+                        ApiClient.apiClient.postInvites(Invite(
+                            null,
+                            Session.player.teamId.toString(),
+                            loadedPlayer.id.toString()
+                        ))
+                    }
+                }
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(intent.hasExtra("PLAYER")) {
+                    startActivity(Intent(this@PlayerActivity, SearchActivity::class.java))
+                }else{
+                    finishAffinity()
+                }
+            }
+
+        })
     }
 
     private fun checkBtnPConfirmEditEnabled(){
         binding.btnPConfirmEdit.isEnabled = namePOk && descPOk && accountPOk && contactPOk
         Log.d(binding.btnPConfirmEdit.isEnabled.toString(), namePOk.toString() + descPOk.toString() + accountPOk.toString() + contactPOk.toString())
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if(intent.hasExtra("PLAYER")) {
-            startActivity(Intent(this, SearchActivity::class.java))
-        }else{
-            super.onBackPressed()
-            finishAffinity()
-        }
-
     }
 }

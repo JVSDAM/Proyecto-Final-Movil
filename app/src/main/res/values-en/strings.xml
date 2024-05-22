@@ -1,8 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Teams3c</string>
-    <string name="BASE_URL" translatable="false">http://172.16.160.120:3001/</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
     <!-- Error Messages -->
     <string name="errorEmptyField">Can\'t be empty</string>
     <string name="errorNotValidEmail">Not valid email</string>
@@ -30,10 +27,9 @@
 
     <!-- Player profile -->
     <string name="tvPDescriptionTitle">Description</string>
-    <string name="tvPAccountTitle">Account</string>
+    <string name="tvPAccountTitle">Account Settings</string>
     <string name="tvPContactTitle">Contact</string>
     <string name="tvPTeamTitle">Team</string>
-    <string name="btnKickPlayer">Kick Member</string>
 
     <!-- Edit player profile -->
     <string name="btnPEditImage">Load image</string>
@@ -51,7 +47,6 @@
     <string name="tvTAdminTitle">Main Manager</string>
     <string name="tvTRosterTitle">Roster</string>
     <string name="tvTTournamentsTitle">Tournaments</string>
-    <string name="btnDeleteTeam">Delete Team</string>
 
     <!-- Edit team profile -->
     <string name="btnTEditImage">Load image</string>
@@ -67,7 +62,6 @@
     <string name="tvToPrizeTitle">Prizes</string>
     <string name="tvToAdminTitle">Main Manager</string>
     <string name="tvToTeamsTitle">Teams registered</string>
-    <string name="btnDeleteTournament">Delete Tournament</string>
 
     <!-- Edit tournament profile -->
 
@@ -75,6 +69,7 @@
     <string name="btnShowPlayers">Players</string>
     <string name="btnShowTeams">Teams</string>
     <string name="btnShowTournaments">Events</string>
+
 
     <!-- Create Activity -->
     <string name="btnCreateTeam">Create Team</string>
@@ -90,14 +85,17 @@
 
     <!-- Settings Activity -->
     <string name="tvTeamRequests">Team requests</string>
-    <string name="tvEditUser">Account Settings</string>
+    <string name="tvEditUser">Edit user</string>
+    <string name="tvLogOut">Log Out</string>
+    <string name="tvDeleteUser">Delete account</string>
     <string name="etNewEmailHint">New Email...</string>
     <string name="etPasswordHint">Password...</string>
     <string name="etNewPasswordHint">New Password...</string>
-    <string name="tvLogOut">Log Out</string>
-    <string name="tvDeleteUser">Delete account</string>
-    <string name="etEmailHint">Email...</string>
     <string name="btnUConfirmEdit">Confirm changes</string>
     <string name="btnUBack">Back</string>
+    <string name="etEmailHint">Email...</string>
+    <string name="btnKickPlayer">Kick Member</string>
+    <string name="btnDeleteTeam">Delete Team</string>
+    <string name="btnDeleteTournament">Delete Tournament</string>
 
 </resources>

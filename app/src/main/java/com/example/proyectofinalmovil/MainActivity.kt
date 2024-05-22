@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
-    //val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
     lateinit var shared: SharedPreferences
 
     var nameRegisterOk = false
@@ -52,6 +51,16 @@ class MainActivity : AppCompatActivity() {
         Log.d("Id shared", shared.getString("id", "").toString())
 
         checkSharedPreferences(shared.getString("id", "").toString())
+
+        //Blurry.with(this).from(BitmapFactory.decodeResource(this.resources, R.drawable.baseline_person_24)).into(binding.imageView)
+
+        /*Blurry.with(this)
+            .radius(10)
+            .sampling(8)
+            .color(Color.argb(66, 255, 255, 0))
+            .async()
+            .onto(binding.clBackground);*/
+
         prepareForm()
         setListeners()
     }
@@ -75,8 +84,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.etRegisterName.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus == false) {
+        binding.etRegisterName.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
                 nameRegisterOk = true
 
                 if (binding.etRegisterName.text.toString() == "") {
@@ -110,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                         val result =
                             ApiClient.apiClient.getPlayerByEmail(binding.etRegisterEmail.text.toString())
                         Log.d("Resultadito", result.players.toString())
-                        if (result.players.size > 0) {
+                        if (result.players.isNotEmpty()) {
                             binding.etRegisterEmail.error =
                                 getText(R.string.errorAlreadyInUse)
                             emailRegisterOk = false
@@ -238,7 +247,7 @@ class MainActivity : AppCompatActivity() {
             if (results.players.size == 1) {
 
                 if (results.players[0].password == binding.etLoginPassword.text.toString()) {
-                    //Toast.makeText(this@MainActivity, "Logging in to the app...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Logging in to the app...", Toast.LENGTH_SHORT).show()
                     binding.etLoginPassword
                     Session.player = results.players[0]
                     Log.d("Usuario que se logea", results.players.toString())
@@ -248,8 +257,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Id shared", shared.getString("id", "No user id").toString())
                     joinApp()
                 } else {
-                    /*Toast.makeText(this@MainActivity, "Incorrect password", Toast.LENGTH_SHORT)
-                        .show()*/
+                    Toast.makeText(this@MainActivity, "Incorrect password", Toast.LENGTH_SHORT).show()
                 }
             }
         }

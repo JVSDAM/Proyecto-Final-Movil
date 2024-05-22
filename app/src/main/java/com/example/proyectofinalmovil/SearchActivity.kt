@@ -1,11 +1,10 @@
 package com.example.proyectofinalmovil
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +21,7 @@ import com.example.proyectofinalmovil.models.Tournament
 import com.example.proyectofinalmovil.viewmodel.PlayersViewModel
 import com.example.proyectofinalmovil.viewmodel.TeamsViewModel
 import com.example.proyectofinalmovil.viewmodel.TournamentsViewModel
+import com.google.android.material.tabs.TabLayout
 
 
 class SearchActivity : AppCompatActivity() {
@@ -75,24 +75,17 @@ class SearchActivity : AppCompatActivity() {
 
 
     private fun changeRecycler(number: Int){
-        binding.btnShowPlayers.setBackgroundColor(Color.parseColor("#FFE1C53A"))
-        binding.btnShowTeams.setBackgroundColor(Color.parseColor("#FFE1C53A"))
-        binding.btnShowTournaments.setBackgroundColor(Color.parseColor("#FFE1C53A"))
-
         binding.playerRecycler.visibility = View.GONE
         binding.teamsRecycler.visibility = View.GONE
         binding.tournamentsRecycler.visibility = View.GONE
 
         if(number == 1){
-            binding.btnShowPlayers.setBackgroundColor(Color.parseColor("#FF806F1F"))
             binding.playerRecycler.visibility = View.VISIBLE
         }
         if(number == 2){
-            binding.btnShowTeams.setBackgroundColor(Color.parseColor("#FF806F1F"))
             binding.teamsRecycler.visibility = View.VISIBLE
         }
         if(number == 3){
-            binding.btnShowTournaments.setBackgroundColor(Color.parseColor("#FF806F1F"))
             binding.tournamentsRecycler.visibility = View.VISIBLE
         }
     }
@@ -130,23 +123,38 @@ class SearchActivity : AppCompatActivity() {
                 return true
             }
         })
-        binding.btnShowPlayers.setOnClickListener(){
-            changeRecycler(1)
-        }
-        binding.btnShowTeams.setOnClickListener(){
-            changeRecycler(2)
-        }
-        binding.btnShowTournaments.setOnClickListener(){
-            changeRecycler(3)
-        }
 
-        /*binding.toggleButton.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+        binding.tlSearch.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                if(p0 == binding.tlSearch.getTabAt(0)){
+                    changeRecycler(1)
+                }
+                if(p0 == binding.tlSearch.getTabAt(1)){
+                    changeRecycler(2)
+                }
+                if(p0 == binding.tlSearch.getTabAt(2)){
+                    changeRecycler(3)
+                }
+            }
 
-        }*/
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                //No necesario pero requerido
+            }
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+                //No necesario pero requerido
+            }
+
+        })
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@SearchActivity, PlayerActivity::class.java))
+            }
+        })
     }
 
     private fun showPlayerInformation(player: Player) {
-        Log.d("Enviando datos", "a PLAYER PROFILE de " + player.name)
         val i = Intent(this, PlayerActivity::class.java).apply {
             putExtra("PLAYER", player)
         }
@@ -155,7 +163,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showTeamInformation(team: Team) {
-        Log.d("Enviando datos", "a TEAM PROFILE de " + team.name)
         val i = Intent(this, TeamActivity::class.java).apply {
             putExtra("TEAM", team)
         }
@@ -164,7 +171,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showTournamentInformation(tournament: Tournament) {
-        Log.d("Enviando datos", "a TOURNAMENT PROFILE de " + tournament.name)
         val i = Intent(this, TournamentActivity::class.java).apply {
             putExtra("TOURNAMENT", tournament)
         }
@@ -172,8 +178,4 @@ class SearchActivity : AppCompatActivity() {
         startActivity(i)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, PlayerActivity::class.java))
-    }
 }

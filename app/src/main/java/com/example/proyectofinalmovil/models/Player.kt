@@ -17,7 +17,3 @@ data class Player(
     @SerializedName("contact") var contact: String?,
     @SerializedName("team_id") var teamId: String?
 ): Serializable
-
-/*data class Oid(
-    @SerializedName("oid") var oid: String
-): Serializable*/

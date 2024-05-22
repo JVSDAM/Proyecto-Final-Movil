@@ -4,34 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.proyectofinalmovil.adapters.PlayerSquareAdapter
-import com.example.proyectofinalmovil.adapters.TeamAdapter
-import com.example.proyectofinalmovil.adapters.TeamSquareAdapter
 import com.example.proyectofinalmovil.adapters.TournamentSquareAdapter
 import com.example.proyectofinalmovil.companions.Session
 import com.example.proyectofinalmovil.databinding.ActivityTeamBinding
-import com.example.proyectofinalmovil.models.Inscription
+import com.example.proyectofinalmovil.models.Invite
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.models.Tournament
 import com.example.proyectofinalmovil.provider.ApiClient
 import com.example.proyectofinalmovil.viewmodel.PlayersSquareViewModel
-import com.example.proyectofinalmovil.viewmodel.TeamsSquareViewModel
-import com.example.proyectofinalmovil.viewmodel.TeamsViewModel
 import com.example.proyectofinalmovil.viewmodel.TournamentsSquareViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TeamActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTeamBinding
@@ -42,6 +37,8 @@ class TeamActivity : AppCompatActivity() {
 
     private var nameTOk = true
     private var descTOk = true
+
+    private var loadedInvite: Invite? = null
 
     private val playersSquareVM: PlayersSquareViewModel by viewModels()
     val playerSquareAdapter = PlayerSquareAdapter(mutableListOf(), { player -> showPlayerInformation(player) })
@@ -129,15 +126,24 @@ class TeamActivity : AppCompatActivity() {
         binding.etTEditName.setText(loadedTeam.name.toString())
         binding.etTEditDescription.setText(loadedTeam.description.toString())
 
-        binding.btnTJoin.visibility = View.VISIBLE
-        if(Session.player.teamId != "" && Session.player.teamId != loadedTeam.id){
-            binding.btnTJoin.visibility = View.GONE
-        }
+        binding.btnTJoin.visibility = View.GONE
 
         if(registered == true){
             binding.btnTJoin.text = "Leave Team"
+            binding.btnTJoin.visibility = View.VISIBLE
         }else{
-            binding.btnTJoin.text = "Join Team"
+            CoroutineScope(Dispatchers.IO).launch(){
+                var results = ApiClient.apiClient.getInvitesByPlayerId(Session.player.id.toString())
+                for(invite in results.invites){
+                    if(invite.teamId == loadedTeam.id){
+                        binding.btnTJoin.text = "Join Team"
+                        binding.btnTJoin.visibility = View.VISIBLE
+                        loadedInvite = invite
+                        break
+                    }
+                }
+            }
+
         }
     }
 
@@ -151,25 +157,34 @@ class TeamActivity : AppCompatActivity() {
 
         binding.btnTJoin.setOnClickListener(){
             if(registered == true){
-                CoroutineScope(Dispatchers.IO).launch {
-                    Session.player.teamId = ""
-                    ApiClient.apiClient.putPlayersById(Session.player.id.toString(), Session.player)
+                if(loadedTeam.adminId == Session.player.id.toString()){
+                    deleteTeam()
+                }else{
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Session.player.teamId = ""
+                        ApiClient.apiClient.putPlayersById(Session.player.id.toString(), Session.player)
 
-                    startActivity(Intent(this@TeamActivity, TeamActivity::class.java).apply {
-                        putExtra("TEAM", loadedTeam)
-                    })
+                        Session.update()
+
+                        startActivity(Intent(this@TeamActivity, TeamActivity::class.java).apply {
+                            putExtra("TEAM", loadedTeam)
+                        })
+                    }
                 }
-                //Delete inscription, reload activity
             }else{
                 CoroutineScope(Dispatchers.IO).launch {
+
                     Session.player.teamId = loadedTeam.id.toString()
                     ApiClient.apiClient.putPlayersById(Session.player.id.toString(), Session.player)
 
+                    ApiClient.apiClient.deleteInvitesById(loadedInvite?.id.toString())
+
+                    Session.update()
+
                     startActivity(Intent(this@TeamActivity, TeamActivity::class.java).apply {
                         putExtra("TEAM", loadedTeam)
                     })
                 }
-
             }
         }
 
@@ -177,10 +192,6 @@ class TeamActivity : AppCompatActivity() {
             binding.clTShow.visibility = View.GONE
             binding.clTEdit.visibility = View.VISIBLE
         }
-
-        /*binding.btnTEditImage.setOnClickListener(){
-            //Todo put image. Que el señor nos tenga en su gloria
-        }*/
 
         binding.etTEditName.addTextChangedListener {
                 nameTOk = true
@@ -224,36 +235,46 @@ class TeamActivity : AppCompatActivity() {
         }
 
         binding.btnDeleteTeam.setOnClickListener(){
+            deleteTeam()
 
-            var players: MutableList<Player>? = playersSquareVM.playerList.value
-            if (players != null) {
-                for(player in players){
-                    CoroutineScope(Dispatchers.IO).launch {
-                        player.teamId = ""
-                        ApiClient.apiClient.putPlayersById(player.id.toString(), player)
-                    }
-                }
-            }
-
-            CoroutineScope(Dispatchers.IO).launch {
-                var inscriptions = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString())
-                for(inscription in inscriptions.inscriptions){
-                    ApiClient.apiClient.deleteInscriptionsById(inscription.id.toString())
-                }
-            }
-
-            CoroutineScope(Dispatchers.IO).launch {
-                ApiClient.apiClient.deleteTeamsById(loadedTeam.id.toString())
-            }
-
-            Session.update()
-            startActivity(Intent(this, CreateActivity::class.java))
         }
 
         binding.btnTBackEdit.setOnClickListener(){
             binding.clTShow.visibility = View.VISIBLE
             binding.clTEdit.visibility = View.GONE
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@TeamActivity, SearchActivity::class.java))
+            }
+        })
+    }
+
+    private fun deleteTeam(){
+        var players: MutableList<Player>? = playersSquareVM.playerList.value
+        if (players != null) {
+            for(player in players){
+                CoroutineScope(Dispatchers.IO).launch {
+                    player.teamId = ""
+                    ApiClient.apiClient.putPlayersById(player.id.toString(), player)
+                }
+            }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var inscriptions = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString())
+            for(inscription in inscriptions.inscriptions){
+                ApiClient.apiClient.deleteInscriptionsById(inscription.id.toString())
+            }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            ApiClient.apiClient.deleteTeamsById(loadedTeam.id.toString())
+        }
+
+        Session.update()
+        startActivity(Intent(this, CreateActivity::class.java))
     }
 
     private fun checkBtnTConfirmEditEnabled(){
@@ -286,10 +307,5 @@ class TeamActivity : AppCompatActivity() {
         }
 
         startActivity(i)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, SearchActivity::class.java))
     }
 }

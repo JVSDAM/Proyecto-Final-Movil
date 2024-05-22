@@ -1,6 +1,5 @@
 package com.example.proyectofinalmovil.provider
 
-import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.models.Inscription
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
@@ -10,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     val retrofit2 = Retrofit.Builder()
-        .baseUrl("http://192.168.0.11:3001/")
+        .baseUrl("http://172.16.160.61:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val apiClient = retrofit2.create(ApiInterface::class.java)

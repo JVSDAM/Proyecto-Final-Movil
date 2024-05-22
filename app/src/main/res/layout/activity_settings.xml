@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clStart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:clickable="false"
+            app:contentPadding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBtnTeamRequests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tvTeamRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvTeamRequests"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivFlecha3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_send" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:clickable="false"
+            app:contentPadding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBtnEditUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tvEditUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvEditUser"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivFlecha0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_send" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:clickable="false"
+            app:contentPadding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBtnDeleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tvDeleteUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvDeleteUser"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivFlecha2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_send" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:clickable="false"
+            app:contentPadding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBtnLogOut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tvLogOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvLogOut"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivFlecha1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_send" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clEditUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etUEditEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:hint="@string/etTEditNameHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <EditText
+            android:id="@+id/etUActualPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:hint="@string/etPasswordHint"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/etUEditEmail"
+            app:layout_constraintStart_toStartOf="@+id/etUEditEmail"
+            app:layout_constraintTop_toBottomOf="@+id/etUEditEmail" />
+
+        <EditText
+            android:id="@+id/etUEditPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:hint="@string/etNewPasswordHint"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/etUActualPassword"
+            app:layout_constraintStart_toStartOf="@+id/etUActualPassword"
+            app:layout_constraintTop_toBottomOf="@+id/etUActualPassword" />
+
+        <Button
+            android:id="@+id/btnUConfirmEdit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTConfirmEdit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tvEditUser"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDeleteUser"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:padding="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tvDeleteUser"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etDeleteEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:hint="@string/etEmailHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/textView13"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <EditText
+            android:id="@+id/etDeletePass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:hint="@string/etPasswordHint"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/etDeleteEmail"
+            app:layout_constraintStart_toStartOf="@+id/etDeleteEmail"
+            app:layout_constraintTop_toBottomOf="@+id/etDeleteEmail" />
+
+        <Button
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTeamRequests"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tvTeamRequests"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvInvites"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="@+id/textView12"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvInvites" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView5"
+        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

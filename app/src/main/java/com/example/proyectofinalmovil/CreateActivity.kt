@@ -1,20 +1,20 @@
 package com.example.proyectofinalmovil
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.proyectofinalmovil.companions.Session
 import com.example.proyectofinalmovil.databinding.ActivityCreateBinding
-import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.models.Tournament
 import com.example.proyectofinalmovil.provider.ApiClient
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,11 +44,26 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun setListeners(){
-        binding.btnFormTeam.setOnClickListener(){
-            changeForm(1)
-        }
+        binding.tlCreate.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                if (p0 == binding.tlCreate.getTabAt(0)) {
+                    changeForm(1)
+                }
+                if (p0 == binding.tlCreate.getTabAt(1)) {
+                    changeForm(2)
+                }
+            }
 
-        binding.etCTName.setOnFocusChangeListener { v, hasFocus ->
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                //No necesario pero requerido
+            }
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+                //No necesario pero requerido
+            }
+        })
+
+        binding.etCTName.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus == false) {
                 nameTOk = true
 
@@ -66,7 +81,7 @@ class CreateActivity : AppCompatActivity() {
             }
         }
 
-        binding.etCTDescription.setOnFocusChangeListener { v, hasFocus ->
+        binding.etCTDescription.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus == false) {
                 descTOk = true
 
@@ -87,11 +102,7 @@ class CreateActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnFormTournament.setOnClickListener(){
-            changeForm(2)
-        }
-
-        binding.etCToName.setOnFocusChangeListener { v, hasFocus ->
+        binding.etCToName.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus == false) {
                 nameToOk = true
 
@@ -109,7 +120,7 @@ class CreateActivity : AppCompatActivity() {
             }
         }
 
-        binding.etCToDescription.setOnFocusChangeListener { v, hasFocus ->
+        binding.etCToDescription.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus == false) {
                 descToOk = true
 
@@ -125,21 +136,22 @@ class CreateActivity : AppCompatActivity() {
         binding.btnCTournament.setOnClickListener(){
             readCToForm()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@CreateActivity, PlayerActivity::class.java))
+            }
+        })
     }
 
     private fun changeForm(number: Int){
-        binding.btnCTeam.setBackgroundColor(Color.parseColor("#FFE1C53A"))
-        binding.btnCTournament.setBackgroundColor(Color.parseColor("#FFE1C53A"))
-
         binding.clCTeam.visibility = View.GONE
         binding.clCTournament.visibility = View.GONE
 
         if(number == 1){
-            binding.btnCTeam.setBackgroundColor(Color.parseColor("#FF806F1F"))
             binding.clCTeam.visibility = View.VISIBLE
         }
         if(number == 2){
-            binding.btnCTournament.setBackgroundColor(Color.parseColor("#FF806F1F"))
             binding.clCTournament.visibility = View.VISIBLE
         }
     }
@@ -195,10 +207,5 @@ class CreateActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             ApiClient.postTournaments(tournament)
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, PlayerActivity::class.java))
     }
 }

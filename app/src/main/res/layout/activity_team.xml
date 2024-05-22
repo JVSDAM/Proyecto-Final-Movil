@@ -7,133 +7,135 @@
     android:layout_height="match_parent"
     tools:context=".TeamActivity">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTShow"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:contentPadding="20dp"
+        android:padding="20dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clTShow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+        <ImageView
+            android:id="@+id/ivTImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_dialog" />
 
-            <ImageView
-                android:id="@+id/ivTImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_dialog" />
+        <TextView
+            android:id="@+id/tvTName"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="20dp"
+            android:text="TextView"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivTImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvTName"
-                android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="20dp"
-                android:text="TextView"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivTImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivTImage"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvTTeamSubtitle"
+            app:layout_constraintStart_toStartOf="@+id/tvTName"
+            app:layout_constraintTop_toBottomOf="@+id/tvTName" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvTTeamSubtitle"
-                app:layout_constraintStart_toStartOf="@+id/tvTName"
-                app:layout_constraintTop_toBottomOf="@+id/tvTName" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/tvTDescriptionTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvTDescription"
+            app:layout_constraintStart_toStartOf="@+id/tvTDescription" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvTDescriptionTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvTDescription"
-                app:layout_constraintStart_toStartOf="@+id/tvTDescription" />
+        <TextView
+            android:id="@+id/tvTDescription"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="28dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivTImage" />
 
-            <TextView
-                android:id="@+id/tvTDescription"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivTImage" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/tvTRosterTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvTRoster"
+            app:layout_constraintStart_toStartOf="@+id/tvTRoster" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvTRosterTitle"
-                app:layout_constraintBottom_toTopOf="@+id/tvTRoster"
-                app:layout_constraintStart_toStartOf="@+id/tvTRoster" />
+        <TextView
+            android:id="@+id/tvTRoster"
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="28dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTDescription" />
 
-            <TextView
-                android:id="@+id/tvTRoster"
-                android:layout_width="300dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="30dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTDescription" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTRoster"
+            android:layout_width="0dp"
+            android:layout_height="85dp"
+            app:layout_constraintEnd_toEndOf="@+id/tvTRoster"
+            app:layout_constraintStart_toStartOf="@+id/tvTRoster"
+            app:layout_constraintTop_toBottomOf="@+id/tvTRoster" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTRoster"
-                android:layout_width="0dp"
-                android:layout_height="85dp"
-                app:layout_constraintEnd_toEndOf="@+id/tvTRoster"
-                app:layout_constraintStart_toStartOf="@+id/tvTRoster"
-                app:layout_constraintTop_toBottomOf="@+id/tvTRoster" />
+        <TextView
+            android:id="@+id/tvTTournaments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/tvTTournamentsTitle"
+            app:layout_constraintBottom_toTopOf="@+id/rvTTournaments"
+            app:layout_constraintStart_toStartOf="@+id/rvTTournaments" />
 
-            <TextView
-                android:id="@+id/tvTTournaments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tvTTournamentsTitle"
-                app:layout_constraintBottom_toTopOf="@+id/rvTTournaments"
-                app:layout_constraintStart_toStartOf="@+id/rvTTournaments" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTTournaments"
+            android:layout_width="0dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="@+id/rvTRoster"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/rvTRoster"
+            app:layout_constraintTop_toBottomOf="@+id/rvTRoster" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTTournaments"
-                android:layout_width="0dp"
-                android:layout_height="85dp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="@+id/rvTRoster"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/rvTRoster"
-                app:layout_constraintTop_toBottomOf="@+id/rvTRoster" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:contentPadding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rvTTournaments"
+            app:layout_constraintStart_toStartOf="@+id/rvTTournaments">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintTAdmin"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true">
 
                 <TextView
                     android:id="@+id/tvTAdmin"
                     android:layout_width="0dp"
                     android:layout_height="25dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -153,113 +155,126 @@
                     android:id="@+id/ivTAdmin"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:layout_marginStart="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@android:drawable/btn_dialog" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/btnTEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/rvTTournaments"
-                app:layout_constraintTop_toBottomOf="@+id/rvTTournaments" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnTEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="?attr/colorPrimary"
+            app:elevation="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardView5"
+            app:layout_constraintStart_toStartOf="@+id/rvTTournaments"
+            app:layout_constraintTop_toBottomOf="@+id/rvTTournaments"
+            app:srcCompat="@android:drawable/ic_dialog_email"
+            app:tint="?android:attr/textColorSecondary" />
 
-            <Button
-                android:id="@+id/btnTJoin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Button"
-                app:layout_constraintEnd_toEndOf="@+id/rvTTournaments"
-                app:layout_constraintTop_toBottomOf="@+id/rvTTournaments" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btnTJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:text="Join Tournament"
+            android:textColor="?android:attr/textColorSecondary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:elevation="0dp"
+            app:icon="@android:drawable/ic_delete"
+            app:iconTint="?android:attr/textColorSecondary"
+            app:layout_constraintBottom_toTopOf="@+id/cardView5"
+            app:layout_constraintEnd_toEndOf="@+id/rvTTournaments"
+            app:layout_constraintTop_toBottomOf="@+id/rvTTournaments" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clTEdit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTEdit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/clTShow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/etTEditName"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="45dp"
-                android:ems="10"
-                android:hint="@string/etTEditNameHint"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <EditText
+            android:id="@+id/etTEditName"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="45dp"
+            android:ems="10"
+            android:hint="@string/etTEditNameHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-            <EditText
-                android:id="@+id/etTEditDescription"
-                android:layout_width="300dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="45dp"
-                android:ems="10"
-                android:hint="@string/etTEditDescriptionHint"
-                android:inputType="textMultiLine"
-                android:singleLine="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTEditName" />
+        <EditText
+            android:id="@+id/etTEditDescription"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="45dp"
+            android:ems="10"
+            android:hint="@string/etTEditDescriptionHint"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etTEditName" />
 
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_dialog" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_dialog" />
 
-            <Button
-                android:id="@+id/btnTEditImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnTEditImage"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        <Button
+            android:id="@+id/btnTEditImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTEditImage"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-            <Button
-                android:id="@+id/btnTConfirmEdit"
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:text="@string/btnTConfirmEdit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTEditDescription" />
+        <Button
+            android:id="@+id/btnTConfirmEdit"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:text="@string/btnTConfirmEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etTEditDescription" />
 
-            <Button
-                android:id="@+id/btnTBackEdit"
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:text="@string/btnTBackEdit"
-                app:layout_constraintBottom_toBottomOf="@+id/btnTConfirmEdit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btnTConfirmEdit" />
+        <Button
+            android:id="@+id/btnTBackEdit"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTBackEdit"
+            app:layout_constraintBottom_toBottomOf="@+id/btnTConfirmEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnTConfirmEdit" />
 
-            <Button
-                android:id="@+id/btnDeleteTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnDeleteTeam"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnTConfirmEdit" />
+        <Button
+            android:id="@+id/btnDeleteTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnDeleteTeam"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnTConfirmEdit" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
