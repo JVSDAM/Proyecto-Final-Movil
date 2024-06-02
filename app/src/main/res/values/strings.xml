@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Teams3c</string>
-    <string name="BASE_URL" translatable="false">http://172.16.160.120:3001/</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <!-- Error Messages -->
@@ -13,9 +12,11 @@
     <string name="errorTooLong">Too long</string>
     <string name="errorNoDescription">No description added...</string>
     <string name="errorNoAccount">No account added...</string>
+    <string name="errorNoAccounts">No accounts added...</string>
     <string name="errorNoContact">No contact added...</string>
     <string name="errorNoTeam">No team added...</string>
     <string name="errorNoPrize">No prize added...</string>
+    <string name="errorAlreadyInTeam">You already have a team!</string>
 
     <!-- Login y Register -->
     <string name="etLoginEmailHint">Email...</string>
@@ -34,6 +35,10 @@
     <string name="tvPContactTitle">Contact</string>
     <string name="tvPTeamTitle">Team</string>
     <string name="btnKickPlayer">Kick Member</string>
+    <string name="btnInvitePlayer">Invite Member</string>
+    <string name="textStaff">Staff</string>
+    <string name="textPlayer">Player</string>
+    <string name="btnInvitePending">Cancel Invite</string>
 
     <!-- Edit player profile -->
     <string name="btnPEditImage">Load image</string>
@@ -52,6 +57,8 @@
     <string name="tvTRosterTitle">Roster</string>
     <string name="tvTTournamentsTitle">Tournaments</string>
     <string name="btnDeleteTeam">Delete Team</string>
+    <string name="btnJoinTeam">Join Team</string>
+    <string name="btnLeaveTeam">Leave Team</string>
 
     <!-- Edit team profile -->
     <string name="btnTEditImage">Load image</string>
@@ -68,6 +75,8 @@
     <string name="tvToAdminTitle">Main Manager</string>
     <string name="tvToTeamsTitle">Teams registered</string>
     <string name="btnDeleteTournament">Delete Tournament</string>
+    <string name="btnJoinTournament">Join Tournament</string>
+    <string name="btnLeaveTournament">Leave Tournament</string>
 
     <!-- Edit tournament profile -->
 
@@ -87,6 +96,8 @@
     <string name="etTournamentDescriptionHint">Description...</string>
     <string name="etTournamentPrizeHint">Prize...</string>
     <string name="btnCreate">Create</string>
+    <string name="teamCreated">Team created!</string>
+    <string name="tournamentCreated">Tournament created!</string>
 
     <!-- Settings Activity -->
     <string name="tvTeamRequests">Team requests</string>

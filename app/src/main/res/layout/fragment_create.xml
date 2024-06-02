@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateActivity">
+    tools:context=".fragments.CreateFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlCreate"
@@ -32,7 +32,7 @@
         android:layout_height="0dp"
         android:padding="10dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlCreate">
@@ -89,7 +89,6 @@
             android:id="@+id/btnCTeam"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorPrimary"
             android:text="@string/btnCreate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlCreate">
@@ -198,12 +197,4 @@
             app:layout_constraintTop_toTopOf="@+id/ivCTournament" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView4"
-        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

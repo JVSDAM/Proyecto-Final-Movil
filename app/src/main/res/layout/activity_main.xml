@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        tools:srcCompat="@android:drawable/btn_dialog" />
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBackground"
@@ -127,10 +127,11 @@
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="30dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_dialog" />
+                app:srcCompat="@drawable/logo_t3c" />
 
             <EditText
                 android:id="@+id/etLoginEmail"

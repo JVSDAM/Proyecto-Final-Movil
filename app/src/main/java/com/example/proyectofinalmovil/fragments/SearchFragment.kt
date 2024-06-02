@@ -1,78 +1,67 @@
-package com.example.proyectofinalmovil
+package com.example.proyectofinalmovil.fragments
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.proyectofinalmovil.MainMenuActivity
 import com.example.proyectofinalmovil.adapters.PlayerAdapter
 import com.example.proyectofinalmovil.adapters.TeamAdapter
 import com.example.proyectofinalmovil.adapters.TournamentAdapter
-import com.example.proyectofinalmovil.databinding.ActivitySearchBinding
+import com.example.proyectofinalmovil.companions.Session
+import com.example.proyectofinalmovil.databinding.FragmentSearchBinding
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.models.Tournament
-import com.example.proyectofinalmovil.viewmodel.PlayersViewModel
-import com.example.proyectofinalmovil.viewmodel.TeamsViewModel
-import com.example.proyectofinalmovil.viewmodel.TournamentsViewModel
+import com.example.proyectofinalmovil.viewmodel.MainMenuViewModel
 import com.google.android.material.tabs.TabLayout
 
 
-class SearchActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySearchBinding
+class SearchFragment : Fragment() {
+    private lateinit var binding: FragmentSearchBinding
 
-    private val playersVM: PlayersViewModel by viewModels()
+    private val mainMenuVM: MainMenuViewModel by viewModels()
+
     val playerAdapter = PlayerAdapter(mutableListOf(), { player -> showPlayerInformation(player) })
 
-    private val teamsVM: TeamsViewModel by viewModels()
     val teamAdapter = TeamAdapter(mutableListOf(), { team -> showTeamInformation(team) })
 
-    private val tournamentsVM: TournamentsViewModel by viewModels()
     val tournamentAdapter = TournamentAdapter(mutableListOf(), { tournament -> showTournamentInformation(tournament) })
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = FragmentSearchBinding.inflate(layoutInflater)
 
         setRecyclers()
         setListeners()
 
-        playersVM.playerList.observe(this) {
+        mainMenuVM.playerList.observe(this.viewLifecycleOwner) {
             playerAdapter.list = it
             playerAdapter.notifyDataSetChanged()
         }
 
-        teamsVM.teamList.observe(this) {
+        mainMenuVM.teamList.observe(this.viewLifecycleOwner) {
             teamAdapter.list = it
             teamAdapter.notifyDataSetChanged()
         }
 
-        tournamentsVM.tournamentList.observe(this) {
+        mainMenuVM.tournamentList.observe(this.viewLifecycleOwner) {
             tournamentAdapter.list = it
             tournamentAdapter.notifyDataSetChanged()
         }
 
         changeRecycler(1)
-        playersVM.searchPlayers("")
-        teamsVM.searchTeams("")
-        tournamentsVM.searchTournaments("")
+        mainMenuVM.searchPlayers("")
+        mainMenuVM.searchTeams("")
+        mainMenuVM.searchTournaments("")
+
+        return binding.root
     }
-
-
 
     private fun changeRecycler(number: Int){
         binding.playerRecycler.visibility = View.GONE
@@ -91,15 +80,15 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setRecyclers() {
-        val playerLayoutManager = LinearLayoutManager(this)
+        val playerLayoutManager = LinearLayoutManager(context)
         binding.playerRecycler.layoutManager = playerLayoutManager
         binding.playerRecycler.adapter = playerAdapter
 
-        val teamLayoutManager = LinearLayoutManager(this)
+        val teamLayoutManager = LinearLayoutManager(context)
         binding.teamsRecycler.layoutManager = teamLayoutManager
         binding.teamsRecycler.adapter = teamAdapter
 
-        val tournamentLayoutManager = LinearLayoutManager(this)
+        val tournamentLayoutManager = LinearLayoutManager(context)
         binding.tournamentsRecycler.layoutManager = tournamentLayoutManager
         binding.tournamentsRecycler.adapter = tournamentAdapter
     }
@@ -111,13 +100,13 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                playersVM.searchPlayers(
+                mainMenuVM.searchPlayers(
                     binding.searchView.query.toString().lowercase().replace(" ", "_")
                 )
-                teamsVM.searchTeams(
+                mainMenuVM.searchTeams(
                     binding.searchView.query.toString().lowercase().replace(" ", "_")
                 )
-                tournamentsVM.searchTournaments(
+                mainMenuVM.searchTournaments(
                     binding.searchView.query.toString().lowercase().replace(" ", "_")
                 )
                 return true
@@ -144,38 +133,26 @@ class SearchActivity : AppCompatActivity() {
             override fun onTabReselected(p0: TabLayout.Tab?) {
                 //No necesario pero requerido
             }
-
-        })
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                startActivity(Intent(this@SearchActivity, PlayerActivity::class.java))
-            }
         })
     }
 
     private fun showPlayerInformation(player: Player) {
-        val i = Intent(this, PlayerActivity::class.java).apply {
-            putExtra("PLAYER", player)
-        }
+        Session.changeLoadedPlayer(player)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(PlayerFragment())
+
     }
 
     private fun showTeamInformation(team: Team) {
-        val i = Intent(this, TeamActivity::class.java).apply {
-            putExtra("TEAM", team)
-        }
+        Session.changeLoadedTeam(team)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(TeamFragment())
     }
 
     private fun showTournamentInformation(tournament: Tournament) {
-        val i = Intent(this, TournamentActivity::class.java).apply {
-            putExtra("TOURNAMENT", tournament)
-        }
+        Session.changeLoadedTournament(tournament)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(TournamentFragment())
     }
 
 }

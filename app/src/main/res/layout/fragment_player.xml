@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayerActivity">
+    tools:context=".fragments.PlayerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clPShow"
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:padding="20dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -126,24 +126,27 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/tvPTeamTitle"
                     app:layout_constraintBottom_toTopOf="@+id/ivPTeam"
                     app:layout_constraintStart_toStartOf="@+id/ivPTeam" />
 
                 <ImageView
                     android:id="@+id/ivPTeam"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@android:drawable/btn_dialog" />
 
                 <TextView
                     android:id="@+id/tvPTeam"
-                    android:layout_width="201dp"
+                    android:layout_width="0dp"
                     android:layout_height="23dp"
                     android:layout_marginStart="10dp"
                     android:text="TextView"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivPTeam"
@@ -159,11 +162,11 @@
             android:layout_gravity="bottom|end"
             android:layout_marginTop="20dp"
             app:backgroundTint="?attr/colorPrimary"
-            app:tint="?android:attr/textColorSecondary"
             app:elevation="0dp"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/tvPContact"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            app:srcCompat="@drawable/baseline_create_24"
+            app:tint="?android:attr/textColorSecondary" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnKickInvitePlayer"
@@ -175,7 +178,7 @@
             android:textColor="?android:attr/textColorSecondary"
             app:backgroundTint="?attr/colorPrimary"
             app:elevation="0dp"
-            app:icon="@android:drawable/ic_delete"
+            app:icon="@drawable/baseline_no_accounts_24"
             app:iconTint="?android:attr/textColorSecondary"
             app:layout_constraintEnd_toEndOf="@+id/tvPContact"
             app:layout_constraintTop_toBottomOf="@+id/tvPContact" />
@@ -188,7 +191,7 @@
         android:layout_height="0dp"
         android:padding="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/clPShow"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -289,14 +292,5 @@
             app:layout_constraintTop_toBottomOf="@+id/etPEditAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

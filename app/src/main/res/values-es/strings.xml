@@ -74,4 +74,16 @@
     <string name="btnKickPlayer">Expulsar miembro</string>
     <string name="btnDeleteTeam">Eliminar Equipo</string>
     <string name="btnDeleteTournament">Eliminar Torneo</string>
+    <string name="errorNoAccounts">No hay cuentas...</string>
+    <string name="btnJoinTeam">Unirse al equipo</string>
+    <string name="btnLeaveTeam">Dejar el equipo</string>
+    <string name="errorAlreadyInTeam">¡Ya estas en un equipo!</string>
+    <string name="teamCreated">¡Equipo creado!</string>
+    <string name="tournamentCreated">¡Torneo creado!</string>
+    <string name="btnInvitePlayer">Invitar miembro</string>
+    <string name="textStaff">Staff</string>
+    <string name="textPlayer">Jugador</string>
+    <string name="btnInvitePending">Cancelar Invitación</string>
+    <string name="btnJoinTournament">Inscribirse</string>
+    <string name="btnLeaveTournament">Abandonar torneo</string>
 </resources>

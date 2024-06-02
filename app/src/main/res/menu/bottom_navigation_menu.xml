@@ -3,12 +3,12 @@
     <item
         android:id="@+id/item_search"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/baseline_manage_search_24"
         android:title="Search" />
     <item
         android:id="@+id/item_create"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/baseline_add_circle_24"
         android:title="Create" />
     <item
         android:id="@+id/item_profile"
@@ -18,6 +18,6 @@
     <item
         android:id="@+id/item_settings"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_save"
+        android:icon="@drawable/baseline_miscellaneous_services_24"
         android:title="Settings" />
 </menu>

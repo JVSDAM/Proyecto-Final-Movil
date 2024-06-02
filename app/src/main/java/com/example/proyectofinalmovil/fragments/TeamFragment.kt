@@ -1,35 +1,32 @@
-package com.example.proyectofinalmovil
+package com.example.proyectofinalmovil.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.proyectofinalmovil.MainMenuActivity
+import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.adapters.PlayerSquareAdapter
 import com.example.proyectofinalmovil.adapters.TournamentSquareAdapter
 import com.example.proyectofinalmovil.companions.Session
-import com.example.proyectofinalmovil.databinding.ActivityTeamBinding
+import com.example.proyectofinalmovil.databinding.FragmentTeamBinding
 import com.example.proyectofinalmovil.models.Invite
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.models.Tournament
 import com.example.proyectofinalmovil.provider.ApiClient
-import com.example.proyectofinalmovil.viewmodel.PlayersSquareViewModel
-import com.example.proyectofinalmovil.viewmodel.TournamentsSquareViewModel
+import com.example.proyectofinalmovil.viewmodel.MainMenuViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TeamActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityTeamBinding
+class TeamFragment : Fragment() {
+    private lateinit var binding: FragmentTeamBinding
     private lateinit var loadedTeam: Team
     private lateinit var admin: Player
 
@@ -40,44 +37,39 @@ class TeamActivity : AppCompatActivity() {
 
     private var loadedInvite: Invite? = null
 
-    private val playersSquareVM: PlayersSquareViewModel by viewModels()
+    private val mainMenuVM: MainMenuViewModel by viewModels()
+
     val playerSquareAdapter = PlayerSquareAdapter(mutableListOf(), { player -> showPlayerInformation(player) })
 
-    private val tournamentsSquareVM: TournamentsSquareViewModel by viewModels()
     val tournamentSquareAdapter = TournamentSquareAdapter(mutableListOf(), { tournament -> showTournamentInformation(tournament) })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityTeamBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = FragmentTeamBinding.inflate(layoutInflater)
 
         loadTeam()
         setRecyclers()
 
-        playersSquareVM.playerList.observe(this) {
+        mainMenuVM.playerList.observe(this.viewLifecycleOwner) {
             playerSquareAdapter.list = it
             playerSquareAdapter.notifyDataSetChanged()
         }
 
-        tournamentsSquareVM.tournamentList.observe(this) {
+        mainMenuVM.tournamentList.observe(this.viewLifecycleOwner) {
             tournamentSquareAdapter.list = it
             tournamentSquareAdapter.notifyDataSetChanged()
         }
 
         fillInterface()
         setListeners()
+
+        return binding.root
     }
 
     private fun loadTeam(){
-        loadedTeam = intent.getSerializableExtra("TEAM") as Team
-        Log.d("En equipo", Session.player.toString())
-        if(loadedTeam.adminId == Session.player.id){
+        loadedTeam = Session.loadedTeam!!
+
+        if(loadedTeam.adminId == Session.sessionPlayer.id){
             //Show admin
             binding.btnTEdit.visibility = View.VISIBLE
         }else{
@@ -85,7 +77,7 @@ class TeamActivity : AppCompatActivity() {
             binding.btnTEdit.visibility = View.GONE
         }
 
-        if(Session.player.teamId == loadedTeam.id){
+        if(Session.sessionPlayer.teamId == loadedTeam.id){
             registered = true
         }else{
             registered = false
@@ -110,17 +102,32 @@ class TeamActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             var rosterList = ApiClient.apiClient.getPlayersByTeamId(loadedTeam.id.toString())
-            playersSquareVM.searchTeamRoster(rosterList)
+            mainMenuVM.searchTeamRoster(rosterList)
+
+            var rosterText = ""
+            for(player in rosterList.players){
+                if(player.staff == false && player.account != null && player.account != ""){
+                    rosterText = rosterText + player.account + ", "
+                }
+            }
+            if(rosterText != ""){
+                binding.tvTRoster.setText(rosterText.dropLast(2))
+            }else{
+                binding.tvTRoster.setText(getText(R.string.errorEmptyField))
+            }
         }
 
         CoroutineScope(Dispatchers.IO).launch {
             var inscriptionList = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString())
-            tournamentsSquareVM.searchRegisteredTournaments(inscriptionList)
+            mainMenuVM.searchRegisteredTournaments(inscriptionList)
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        binding.cardView5.visibility = View.GONE
+        CoroutineScope(Dispatchers.Main).launch {
             admin = ApiClient.apiClient.getPlayersById(loadedTeam.adminId)
+            Glide.with(binding.ivTAdmin).load(admin.image).into(binding.ivTAdmin)
             binding.tvTAdmin.text = admin.name
+            binding.cardView5.visibility = View.VISIBLE
         }
 
         binding.etTEditName.setText(loadedTeam.name.toString())
@@ -129,61 +136,61 @@ class TeamActivity : AppCompatActivity() {
         binding.btnTJoin.visibility = View.GONE
 
         if(registered == true){
-            binding.btnTJoin.text = "Leave Team"
+            binding.btnTJoin.text = getText(R.string.btnLeaveTeam)
             binding.btnTJoin.visibility = View.VISIBLE
+            binding.btnTJoin.icon = resources.getDrawable(R.drawable.baseline_cancel_24)
         }else{
             CoroutineScope(Dispatchers.IO).launch(){
-                var results = ApiClient.apiClient.getInvitesByPlayerId(Session.player.id.toString())
+                var results = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString())
                 for(invite in results.invites){
                     if(invite.teamId == loadedTeam.id){
-                        binding.btnTJoin.text = "Join Team"
+                        binding.btnTJoin.text = getText(R.string.btnJoinTeam)
                         binding.btnTJoin.visibility = View.VISIBLE
+                        binding.btnTJoin.icon = resources.getDrawable(R.drawable.baseline_check_circle_24)
                         loadedInvite = invite
                         break
                     }
                 }
             }
-
         }
     }
 
     private fun setListeners(){
         binding.constraintTAdmin.setOnClickListener(){
-            val i = Intent(this, PlayerActivity::class.java).apply {
-                putExtra("PLAYER", admin)
-            }
-            startActivity(i)
+            Session.changeLoadedPlayer(admin)
+
+            (activity as MainMenuActivity).replaceFragments(PlayerFragment())
         }
 
         binding.btnTJoin.setOnClickListener(){
             if(registered == true){
-                if(loadedTeam.adminId == Session.player.id.toString()){
+                if(loadedTeam.adminId == Session.sessionPlayer.id.toString()){
                     deleteTeam()
                 }else{
                     CoroutineScope(Dispatchers.IO).launch {
-                        Session.player.teamId = ""
-                        ApiClient.apiClient.putPlayersById(Session.player.id.toString(), Session.player)
+                        Session.sessionPlayer.teamId = ""
+                        ApiClient.apiClient.putPlayersById(Session.sessionPlayer.id.toString(), Session.sessionPlayer)
 
                         Session.update()
 
-                        startActivity(Intent(this@TeamActivity, TeamActivity::class.java).apply {
-                            putExtra("TEAM", loadedTeam)
-                        })
+                        Session.changeLoadedTeam(loadedTeam)
+
+                        (activity as MainMenuActivity).replaceFragments(TeamFragment())
                     }
                 }
             }else{
                 CoroutineScope(Dispatchers.IO).launch {
 
-                    Session.player.teamId = loadedTeam.id.toString()
-                    ApiClient.apiClient.putPlayersById(Session.player.id.toString(), Session.player)
+                    Session.sessionPlayer.teamId = loadedTeam.id.toString()
+                    ApiClient.apiClient.putPlayersById(Session.sessionPlayer.id.toString(), Session.sessionPlayer)
 
                     ApiClient.apiClient.deleteInvitesById(loadedInvite?.id.toString())
 
                     Session.update()
 
-                    startActivity(Intent(this@TeamActivity, TeamActivity::class.java).apply {
-                        putExtra("TEAM", loadedTeam)
-                    })
+                    Session.changeLoadedTeam(loadedTeam)
+
+                    (activity as MainMenuActivity).replaceFragments(TeamFragment())
                 }
             }
         }
@@ -228,9 +235,9 @@ class TeamActivity : AppCompatActivity() {
                 ApiClient.apiClient.putTeamsById(editedTeam.id.toString(), editedTeam)
                 loadedTeam = ApiClient.apiClient.getTeamsById(editedTeam.id.toString())
 
-                startActivity(Intent(this@TeamActivity,TeamActivity::class.java).apply {
-                    putExtra("TEAM", loadedTeam)
-                })
+                Session.changeLoadedTeam(loadedTeam)
+
+                (activity as MainMenuActivity).replaceFragments(TeamFragment())
             }
         }
 
@@ -243,16 +250,10 @@ class TeamActivity : AppCompatActivity() {
             binding.clTShow.visibility = View.VISIBLE
             binding.clTEdit.visibility = View.GONE
         }
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                startActivity(Intent(this@TeamActivity, SearchActivity::class.java))
-            }
-        })
     }
 
     private fun deleteTeam(){
-        var players: MutableList<Player>? = playersSquareVM.playerList.value
+        var players: MutableList<Player>? = mainMenuVM.playerList.value
         if (players != null) {
             for(player in players){
                 CoroutineScope(Dispatchers.IO).launch {
@@ -274,7 +275,10 @@ class TeamActivity : AppCompatActivity() {
         }
 
         Session.update()
-        startActivity(Intent(this, CreateActivity::class.java))
+        Session.loadedTeam = null
+
+        (activity as MainMenuActivity).replaceFragments(CreateFragment())
+
     }
 
     private fun checkBtnTConfirmEditEnabled(){
@@ -282,30 +286,24 @@ class TeamActivity : AppCompatActivity() {
     }
 
     private fun setRecyclers(){
-        val playerSquareLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val playerSquareLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvTRoster.layoutManager = playerSquareLayoutManager
         binding.rvTRoster.adapter = playerSquareAdapter
 
-        val tournamentSquareLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val tournamentSquareLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvTTournaments.layoutManager = tournamentSquareLayoutManager
         binding.rvTTournaments.adapter = tournamentSquareAdapter
     }
 
     private fun showPlayerInformation(player: Player) {
-        Log.d("Enviando datos", "a PLAYER PROFILE de " + player.name)
-        val i = Intent(this, PlayerActivity::class.java).apply {
-            putExtra("PLAYER", player)
-        }
+        Session.changeLoadedPlayer(player)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(PlayerFragment())
     }
 
     private fun showTournamentInformation(tournament: Tournament) {
-        Log.d("Enviando datos", "a TOURNAMENT PROFILE de " + tournament.name)
-        val i = Intent(this, TournamentActivity::class.java).apply {
-            putExtra("TOURNAMENT", tournament)
-        }
+        Session.changeLoadedTournament(tournament)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(TournamentFragment())
     }
 }

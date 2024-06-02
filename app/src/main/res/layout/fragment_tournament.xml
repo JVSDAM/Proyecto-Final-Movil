@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeamActivity">
+    tools:context=".fragments.TeamFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clToShow"
@@ -13,12 +13,11 @@
         android:layout_height="0dp"
         android:padding="20dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ivToImage"
@@ -112,12 +111,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             app:backgroundTint="?attr/colorPrimary"
-            app:tint="?android:attr/textColorSecondary"
             app:elevation="0dp"
             app:layout_constraintBottom_toTopOf="@+id/cvShowToAdmin"
             app:layout_constraintStart_toStartOf="@+id/rvToTeams"
             app:layout_constraintTop_toBottomOf="@+id/rvToTeams"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            app:srcCompat="@drawable/baseline_create_24"
+            app:tint="?android:attr/textColorSecondary" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnToJoin"
@@ -128,7 +127,7 @@
             android:textColor="?android:attr/textColorSecondary"
             app:backgroundTint="?attr/colorPrimary"
             app:elevation="0dp"
-            app:icon="@android:drawable/ic_delete"
+            app:icon="@drawable/baseline_add_circle_24"
             app:iconTint="?android:attr/textColorSecondary"
             app:layout_constraintBottom_toTopOf="@+id/cvShowToAdmin"
             app:layout_constraintEnd_toEndOf="@+id/rvToTeams"
@@ -156,8 +155,10 @@
                     android:id="@+id/tvToAdmin"
                     android:layout_width="0dp"
                     android:layout_height="25dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivToAdmin"
@@ -174,9 +175,8 @@
 
                 <ImageView
                     android:id="@+id/ivToAdmin"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginStart="25dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@android:drawable/btn_dialog" />
@@ -195,11 +195,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clToEdit"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/etToEditName"
@@ -287,14 +289,5 @@
             app:layout_constraintTop_toBottomOf="@+id/btnToConfirmEdit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.proyectofinalmovil.fragments.MenuFragment"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

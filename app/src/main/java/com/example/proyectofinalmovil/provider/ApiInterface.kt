@@ -24,54 +24,54 @@ interface ApiInterface {
     suspend fun postPlayers(@Body player: Player): Response<Player>
 
     @GET("/players/email/{email}")
-    suspend fun getPlayerByEmail(@Path("email") email: String): PlayerRes
+    suspend fun getPlayerByEmail(@Path("email") email: String): Response<PlayerRes>
 
     @GET("/players/{name}")
-    suspend fun getPlayersByName(@Path("name") name: String): PlayerRes
+    suspend fun getPlayersByName(@Path("name") name: String): Response<PlayerRes>
 
     @GET("/players/id/{id}")
-    suspend fun getPlayersById(@Path("id") id: String): Player
+    suspend fun getPlayersById(@Path("id") id: String): Response<Player>
 
     @GET("/players/team/{team_id}")
-    suspend fun getPlayersByTeamId(@Path("team_id") teamId: String): PlayerRes
+    suspend fun getPlayersByTeamId(@Path("team_id") teamId: String): Response<PlayerRes>
 
     @PUT("/players/id/{id}")
     suspend fun putPlayersById(@Path("id") id: String, @Body player: Player): Response<Player>
 
     @DELETE("players/id/{id}")
-    suspend fun deletePlayersById(@Path("id") id: String): Player
+    suspend fun deletePlayersById(@Path("id") id: String): Response<Player>
 
     //TEAMS
     @POST("/teams")
     suspend fun postTeams(@Body team: Team): Response<Team>
 
     @GET("/teams/{name}")
-    suspend fun getTeamsByName(@Path("name") name: String): TeamRes
+    suspend fun getTeamsByName(@Path("name") name: String): Response<TeamRes>
 
     @GET("/teams/id/{id}")
-    suspend fun getTeamsById(@Path("id") id: String): Team
+    suspend fun getTeamsById(@Path("id") id: String): Response<Team>
 
     @PUT("/teams/id/{id}")
     suspend fun putTeamsById(@Path("id") id: String, @Body team: Team): Response<Team>
 
     @DELETE("teams/id/{id}")
-    suspend fun deleteTeamsById(@Path("id") id: String): Team
+    suspend fun deleteTeamsById(@Path("id") id: String): Response<Team>
 
     //TOURNAMENTS
     @POST("/tournaments")
     suspend fun postTournaments(@Body tournament: Tournament): Response<Tournament>
 
     @GET("/tournaments/{name}")
-    suspend fun getTournamentsByName(@Path("name") name: String): TournamentRes
+    suspend fun getTournamentsByName(@Path("name") name: String): Response<TournamentRes>
 
     @GET("/tournaments/id/{id}")
-    suspend fun getTournamentsById(@Path("id") id: String): Tournament
+    suspend fun getTournamentsById(@Path("id") id: String): Response<Tournament>
 
     @PUT("/tournaments/id/{id}")
     suspend fun putTournamentsById(@Path("id") id: String, @Body tournament: Tournament): Response<Tournament>
 
     @DELETE("tournaments/id/{id}")
-    suspend fun deleteTournamentsById(@Path("id") id: String): Team
+    suspend fun deleteTournamentsById(@Path("id") id: String): Response<Team>
 
     //INSCRIPTIONS
     @POST("/inscriptions")

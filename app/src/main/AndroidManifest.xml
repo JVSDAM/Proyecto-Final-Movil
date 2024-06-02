@@ -16,22 +16,25 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".TeamActivity"
+            android:name=".MainMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".fragments.TeamFragment"
             android:exported="false" />
         <activity
-            android:name=".CreateActivity"
+            android:name=".fragments.SettingsFragment"
             android:exported="false" />
         <activity
-            android:name=".TournamentActivity"
+            android:name=".fragments.CreateFragment"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".fragments.TournamentFragment"
             android:exported="false" />
         <activity
-            android:name=".PlayerActivity"
+            android:name=".fragments.SearchFragment"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.PlayerFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

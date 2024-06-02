@@ -1,32 +1,34 @@
-package com.example.proyectofinalmovil
+package com.example.proyectofinalmovil.fragments
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.proyectofinalmovil.MainActivity
+import com.example.proyectofinalmovil.MainMenuActivity
+import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.adapters.TeamInviteAdapter
 import com.example.proyectofinalmovil.companions.Session
-import com.example.proyectofinalmovil.databinding.ActivitySettingsBinding
+import com.example.proyectofinalmovil.databinding.FragmentSettingsBinding
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.provider.ApiClient
-import com.example.proyectofinalmovil.viewmodel.TeamInvitesViewModel
+import com.example.proyectofinalmovil.viewmodel.MainMenuViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SettingsActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySettingsBinding
+class SettingsFragment : Fragment() {
+    lateinit var binding: FragmentSettingsBinding
 
     lateinit var shared: SharedPreferences
 
@@ -37,25 +39,19 @@ class SettingsActivity : AppCompatActivity() {
     private var emailUDelOk = true
     private var passwordUDelOk = true
 
-    private val teamInvitesVM: TeamInvitesViewModel by viewModels()
+    private val mainMenuVM: MainMenuViewModel by viewModels()
+
     val teamInviteAdapter = TeamInviteAdapter(mutableListOf(), { team -> showTeamInformation(team) })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        shared = getSharedPreferences("Test", Context.MODE_PRIVATE)
+        shared = this.requireActivity().getSharedPreferences("Test", Context.MODE_PRIVATE)
 
         setRecyclers()
 
-        teamInvitesVM.teamList.observe(this) {
+        mainMenuVM.teamList.observe(this.viewLifecycleOwner) {
             teamInviteAdapter.list = it
             teamInviteAdapter.notifyDataSetChanged()
         }
@@ -63,6 +59,8 @@ class SettingsActivity : AppCompatActivity() {
         fillInterface()
         setListeners()
         showView(binding.clStart)
+
+        return binding.root
     }
 
     private fun showView(view: View) {
@@ -75,12 +73,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun fillInterface() {
-        binding.etUEditEmail.setText(Session.player.email)
+        binding.etUEditEmail.setText(Session.sessionPlayer.email)
 
         CoroutineScope(Dispatchers.IO).launch {
-            var inviteList = ApiClient.apiClient.getInvitesByPlayerId(Session.player.id.toString())
+            var inviteList = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString())
             Log.d("Invitaciones a cargar", inviteList.invites.toString())
-            teamInvitesVM.searchInvites(inviteList)
+            mainMenuVM.searchInvites(inviteList)
         }
     }
 
@@ -134,11 +132,11 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.btnUConfirmEdit.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                var results = ApiClient.apiClient.getPlayersById(Session.player.id.toString())
+                var results = ApiClient.apiClient.getPlayersById(Session.sessionPlayer.id.toString())
 
                 if (results.password == binding.etUActualPassword.text.toString()) {
 
-                    var newUser = Session.player
+                    var newUser = Session.sessionPlayer
 
                     newUser.email = binding.etUEditEmail.text.toString()
 
@@ -146,10 +144,10 @@ class SettingsActivity : AppCompatActivity() {
                         newUser.password = binding.etUEditPassword.text.toString()
                     }
 
-                    ApiClient.apiClient.putPlayersById(Session.player.id.toString(), newUser)
+                    ApiClient.apiClient.putPlayersById(Session.sessionPlayer.id.toString(), newUser)
 
                     shared.edit().clear().apply()
-                    startActivity(Intent(this@SettingsActivity, MainActivity::class.java))
+                    startActivity(Intent(context, MainActivity::class.java))
                 }
             }
         }
@@ -170,10 +168,10 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.btnDeleteUser.setOnClickListener {
-            if (binding.etDeleteEmail.text.toString() == Session.player.email) {
-                if (binding.etDeletePass.text.toString() == Session.player.password) {
+            if (binding.etDeleteEmail.text.toString() == Session.sessionPlayer.email) {
+                if (binding.etDeletePass.text.toString() == Session.sessionPlayer.password) {
                     CoroutineScope(Dispatchers.IO).launch {
-                        ApiClient.apiClient.deletePlayersById(Session.player.id.toString())
+                        ApiClient.apiClient.deletePlayersById(Session.sessionPlayer.id.toString())
                     }
                     logOut()
                 } else {
@@ -188,32 +186,18 @@ class SettingsActivity : AppCompatActivity() {
         binding.clBtnLogOut.setOnClickListener {
             logOut()
         }
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (binding.clStart.visibility == View.GONE) {
-                    showView(binding.clStart)
-                } else {
-                    startActivity(Intent(this@SettingsActivity, PlayerActivity::class.java))
-                }
-
-            }
-        })
     }
 
     private fun setRecyclers(){
-        val teamInviteLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val teamInviteLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvInvites.layoutManager = teamInviteLayoutManager
         binding.rvInvites.adapter = teamInviteAdapter
     }
 
     private fun showTeamInformation(team: Team){
-        Log.d("Enviando datos", "a TEAM PROFILE de " + team.name)
-        val i = Intent(this, TeamActivity::class.java).apply {
-            putExtra("TEAM", team)
-        }
+        Session.changeLoadedTeam(team)
 
-        startActivity(i)
+        (activity as MainMenuActivity).replaceFragments(TeamFragment())
     }
 
     private fun checkBtnUConfirmEditEnabled() {
@@ -226,6 +210,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun logOut() {
         shared.edit().clear().apply()
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(context, MainActivity::class.java))
     }
 }
