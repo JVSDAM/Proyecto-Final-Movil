@@ -1,5 +1,5 @@
 <img src="https://github.com/JVSDAM/Proyecto-Final-Movil/assets/145678059/c32cc4fb-8bc1-46dd-85cf-3caf2d0d3f4a" width=200px height=200px> 
-<h1>Teams3C - API</h1>
+<h1>Teams3C - APP</h1>
 
 ### 📋 RESUMEN
 Registro, login, perfil de jugador (tercer boton, el que carga nada mas entrar) y buscador de jugadores (primer boton, el de mas a la izquierda)
