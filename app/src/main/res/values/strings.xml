@@ -109,6 +109,7 @@
     <string name="tvDeleteUser">Delete account</string>
     <string name="etEmailHint">Email...</string>
     <string name="btnUConfirmEdit">Confirm changes</string>
+    <string name="btnUConfirmDelete">Confirm delete</string>
     <string name="btnUBack">Back</string>
 
 </resources>

@@ -109,5 +109,6 @@
     <string name="btnInvitePending">Cancel Invite</string>
     <string name="btnJoinTournament">Join Tournament</string>
     <string name="btnLeaveTournament">Leave Tournament</string>
+    <string name="btnUConfirmDelete">Confirm delete</string>
 
 </resources>

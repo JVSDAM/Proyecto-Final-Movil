@@ -19,7 +19,7 @@ object Session {
 
     fun update(){
         CoroutineScope(Dispatchers.IO).launch {
-            val updatePlayer = ApiClient.apiClient.getPlayersById(sessionPlayer.id.toString())
+            val updatePlayer = ApiClient.apiClient.getPlayersById(sessionPlayer.id.toString()).body()!!
             sessionPlayer = updatePlayer
             /*val updateTeam = ApiClient.apiClient.getPlayersById(sessionPlayer.id.toString())
             sessionPlayer = updateTeam

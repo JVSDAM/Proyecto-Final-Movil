@@ -52,15 +52,6 @@ class MainActivity : AppCompatActivity() {
 
         checkSharedPreferences(shared.getString("id", "").toString())
 
-        //Blurry.with(this).from(BitmapFactory.decodeResource(this.resources, R.drawable.baseline_person_24)).into(binding.imageView)
-
-        /*Blurry.with(this)
-            .radius(10)
-            .sampling(8)
-            .color(Color.argb(66, 255, 255, 0))
-            .async()
-            .onto(binding.clBackground);*/
-
         prepareForm()
         setListeners()
     }
@@ -68,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkSharedPreferences(sharedId: String) {
         if (sharedId != "") {
             CoroutineScope(Dispatchers.IO).launch {
-                var results = ApiClient.apiClient.getPlayersById(sharedId)
+                var results = ApiClient.apiClient.getPlayersById(sharedId).body()!!
                 Session.sessionPlayer = results
                 Log.d("Usuario que se logea", Session.sessionPlayer.name)
                 joinApp()
@@ -224,7 +215,7 @@ class MainActivity : AppCompatActivity() {
     private fun readLoginForm() {
         CoroutineScope(Dispatchers.Main).launch {
             val result =
-                ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString())
+                ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString()).body()!!
             Log.d("Resultadito", result.players.toString())
             if (result.players.size < 1) {
                 binding.etLoginEmail.error = getText(R.string.errorEmailNotRegistered)
@@ -237,7 +228,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyLogIn() {
         CoroutineScope(Dispatchers.Main).launch {
-            var results = ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString())
+            var results = ApiClient.apiClient.getPlayerByEmail(binding.etLoginEmail.text.toString()).body()!!
             if (results.players.size == 1) {
 
                 if (results.players[0].password == binding.etLoginPassword.text.toString()) {

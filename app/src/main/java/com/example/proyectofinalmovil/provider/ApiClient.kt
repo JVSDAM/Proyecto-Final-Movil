@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     val retrofit2 = Retrofit.Builder()
-        .baseUrl("http://172.16.160.29:3001/")
+        .baseUrl("http://172.16.160.97:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val apiClient = retrofit2.create(ApiInterface::class.java)

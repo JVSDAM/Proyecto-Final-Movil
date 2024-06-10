@@ -86,4 +86,5 @@
     <string name="btnInvitePending">Cancelar Invitación</string>
     <string name="btnJoinTournament">Inscribirse</string>
     <string name="btnLeaveTournament">Abandonar torneo</string>
+    <string name="btnUConfirmDelete">Confirmar eliminación</string>
 </resources>

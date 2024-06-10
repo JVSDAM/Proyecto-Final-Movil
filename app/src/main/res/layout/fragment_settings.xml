@@ -218,15 +218,6 @@
             app:layout_constraintStart_toStartOf="@+id/etUActualPassword"
             app:layout_constraintTop_toBottomOf="@+id/etUActualPassword" />
 
-        <Button
-            android:id="@+id/btnUConfirmEdit"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btnTConfirmEdit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/textView11"
             android:layout_width="0dp"
@@ -237,6 +228,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnBackEditUser"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/btnUBack"
+            app:layout_constraintBottom_toBottomOf="@+id/btnUConfirmEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnUConfirmEdit" />
+
+        <Button
+            android:id="@+id/btnUConfirmEdit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTConfirmEdit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBackEditUser"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -289,12 +299,24 @@
 
         <Button
             android:id="@+id/btnDeleteUser"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/btnUConfirmDelete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBackDeleteUser"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnBackDeleteUser"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/btnUBack"
+            app:layout_constraintBottom_toBottomOf="@+id/btnDeleteUser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnDeleteUser" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -325,17 +347,17 @@
             android:layout_height="0dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/btnBackTeamInvites"
             app:layout_constraintEnd_toEndOf="@+id/textView12"
             app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnBackTeamInvites"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Button"
+            android:text="@string/btnUBack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

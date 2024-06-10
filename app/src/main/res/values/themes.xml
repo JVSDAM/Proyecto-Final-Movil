@@ -7,4 +7,5 @@
     </style>
 
     <style name="Theme.ProyectoFinalMovil" parent="Base.Theme.ProyectoFinalMovil" />
+    <style name="SearchView" parent="Theme.Material3.Light.NoActionBar"/>
 </resources>

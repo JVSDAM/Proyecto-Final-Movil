@@ -204,8 +204,8 @@ class CreateFragment : Fragment() {
 
     private fun createTeam(team: Team) {
         CoroutineScope(Dispatchers.IO).launch {
-            var newTeam = ApiClient.apiClient.postTeams(team)
-            var uPlayer = Session.sessionPlayer
+            val newTeam = ApiClient.apiClient.postTeams(team)
+            val uPlayer = Session.sessionPlayer
             if (newTeam.body() != null) {
                 newTeam.code()
                 uPlayer.teamId = newTeam.body()!!.id.toString()

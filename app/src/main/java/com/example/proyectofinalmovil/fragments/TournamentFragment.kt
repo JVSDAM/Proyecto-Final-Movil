@@ -93,13 +93,13 @@ class TournamentFragment : Fragment() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            var inscriptionList = ApiClient.apiClient.getInscriptionsByTournamentId(loadedTournament.id.toString())
+            var inscriptionList = ApiClient.apiClient.getInscriptionsByTournamentId(loadedTournament.id.toString()).body()!!
             mainMenuVM.searchRegisteredTeams(inscriptionList)
         }
 
         binding.cvShowToAdmin.visibility = View.GONE
         CoroutineScope(Dispatchers.Main).launch {
-            admin = ApiClient.apiClient.getPlayersById(loadedTournament.adminId)
+            admin = ApiClient.apiClient.getPlayersById(loadedTournament.adminId).body()!!
             Glide.with(binding.ivToAdmin).load(admin.image).into(binding.ivToAdmin)
             binding.tvToAdmin.text = admin.name
             binding.cvShowToAdmin.visibility = View.VISIBLE
@@ -108,10 +108,10 @@ class TournamentFragment : Fragment() {
         binding.btnToJoin.visibility = View.GONE
         if(Session.sessionPlayer.teamId != null){
             CoroutineScope(Dispatchers.Main).launch{
-                var team = ApiClient.apiClient.getTeamsById(Session.sessionPlayer.teamId.toString())
+                var team = ApiClient.apiClient.getTeamsById(Session.sessionPlayer.teamId.toString()).body()!!
                 if(team.adminId == Session.sessionPlayer.id){
                     binding.btnToJoin.visibility = View.VISIBLE
-                    var results = ApiClient.apiClient.getInscriptionsByTeamId(Session.sessionPlayer.teamId.toString())
+                    var results = ApiClient.apiClient.getInscriptionsByTeamId(Session.sessionPlayer.teamId.toString()).body()!!
 
                     for(inscription in results.inscriptions){
                         if(inscription.tournamentId == loadedTournament.id){
@@ -187,7 +187,7 @@ class TournamentFragment : Fragment() {
                 editedTournament.prize = binding.etToEditPrize.text.toString()
 
                 ApiClient.apiClient.putTournamentsById(editedTournament.id.toString(), editedTournament)
-                editedTournament = ApiClient.apiClient.getTournamentsById(editedTournament.id.toString())
+                editedTournament = ApiClient.apiClient.getTournamentsById(editedTournament.id.toString()).body()!!
 
                 Session.changeLoadedTournament(editedTournament)
 
@@ -224,7 +224,7 @@ class TournamentFragment : Fragment() {
         binding.btnDeleteTournament.setOnClickListener(){
             CoroutineScope(Dispatchers.Main).launch {
                 Log.d("torneo eliminar", loadedTournament.id.toString())
-                var inscriptions = ApiClient.apiClient.getInscriptionsByTournamentId(loadedTournament.id.toString())
+                var inscriptions = ApiClient.apiClient.getInscriptionsByTournamentId(loadedTournament.id.toString()).body()!!
                 for(inscription in inscriptions.inscriptions){
                     ApiClient.apiClient.deleteInscriptionsById(inscription.id.toString())
                 }

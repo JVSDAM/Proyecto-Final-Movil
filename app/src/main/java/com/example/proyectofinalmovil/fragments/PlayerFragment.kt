@@ -13,6 +13,7 @@ import com.example.proyectofinalmovil.R
 import com.example.proyectofinalmovil.companions.Session
 import com.example.proyectofinalmovil.databinding.FragmentPlayerBinding
 import com.example.proyectofinalmovil.models.Invite
+import com.example.proyectofinalmovil.models.InviteRes
 import com.example.proyectofinalmovil.models.Player
 import com.example.proyectofinalmovil.models.Team
 import com.example.proyectofinalmovil.provider.ApiClient
@@ -39,6 +40,7 @@ class PlayerFragment : Fragment() {
         loadPlayer()
         fillInterface()
         setListeners()
+
         return binding.root
     }
 
@@ -54,8 +56,8 @@ class PlayerFragment : Fragment() {
     private fun checkInYourTeam(){
         if(Session.sessionPlayer.teamId.toString() != "" && Session.sessionPlayer.teamId.toString() != null) {
 
-            CoroutineScope(Dispatchers.IO).launch {
-                var yourTeam = ApiClient.apiClient.getTeamsById(Session.sessionPlayer.teamId.toString())
+            CoroutineScope(Dispatchers.Main).launch {
+                var yourTeam = ApiClient.apiClient.getTeamsById(Session.sessionPlayer.teamId.toString()).body()!!
                 if (yourTeam.adminId == Session.sessionPlayer.id) {
                     if (loadedPlayer.teamId.toString() != "" && loadedPlayer.teamId.toString() != null) {
                         if (loadedPlayer.teamId.toString() == Session.sessionPlayer.teamId.toString()) {
@@ -111,7 +113,7 @@ class PlayerFragment : Fragment() {
         binding.cvShowTeam.visibility = View.GONE
         if (loadedPlayer.teamId != "") {
             CoroutineScope(Dispatchers.Main).launch {
-                team = ApiClient.apiClient.getTeamsById(loadedPlayer.teamId.toString())
+                team = ApiClient.apiClient.getTeamsById(loadedPlayer.teamId.toString()).body()!!
                 Glide.with(binding.ivPTeam).load(team.image).into(binding.ivPTeam)
                 binding.tvPTeam.text = team.name
                 Log.d("Equipo cargado", team.toString())
@@ -122,6 +124,10 @@ class PlayerFragment : Fragment() {
         binding.btnKickInvitePlayer.visibility = View.GONE
         binding.btnKickInvitePlayer.elevation = 0f
 
+        CoroutineScope(Dispatchers.Main).launch {
+            var results = ApiClient.apiClient.getInvitesByPlayerId(loadedPlayer.id.toString()).body()!!
+            checkInvited(results)
+        }
 
         binding.etPEditName.setText(loadedPlayer.name)
 
@@ -203,7 +209,7 @@ class PlayerFragment : Fragment() {
         }
 
         binding.btnPConfirmEdit.setOnClickListener(){
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 var editedPlayer = loadedPlayer
 
                 editedPlayer.name = binding.etPEditName.text.toString()
@@ -214,7 +220,7 @@ class PlayerFragment : Fragment() {
 
 
                 ApiClient.apiClient.putPlayersById(editedPlayer.id.toString(), editedPlayer)
-                loadedPlayer = ApiClient.apiClient.getPlayersById(editedPlayer.id.toString())
+                loadedPlayer = ApiClient.apiClient.getPlayersById(editedPlayer.id.toString()).body()!!
 
                 Session.changeLoadedPlayer(loadedPlayer)
 
@@ -239,17 +245,8 @@ class PlayerFragment : Fragment() {
                 }
             }else{
                 CoroutineScope(Dispatchers.Main).launch {
-                    var results = ApiClient.apiClient.getInvitesByPlayerId(loadedPlayer.id.toString())
-                    var canInvite = true
-                    for(invite in results.invites){
-                        if(invite.teamId == Session.sessionPlayer.teamId){
-                            canInvite = false
-                            binding.btnKickInvitePlayer.setText(getText(R.string.btnInvitePending))
-                            binding.btnKickInvitePlayer.icon = resources.getDrawable(R.drawable.baseline_access_time_24)
-
-                            break
-                        }
-                    }
+                    var results = ApiClient.apiClient.getInvitesByPlayerId(loadedPlayer.id.toString()).body()!!
+                    var canInvite = checkInvited(results)
 
                     if(canInvite){
                         ApiClient.apiClient.postInvites(Invite(
@@ -257,10 +254,30 @@ class PlayerFragment : Fragment() {
                             Session.sessionPlayer.teamId.toString(),
                             loadedPlayer.id.toString()
                         ))
+                    }else{
+                        for(invite in results.invites){
+                            if(invite.teamId == Session.sessionPlayer.teamId){
+                                ApiClient.apiClient.deleteInvitesById(invite.id.toString())
+                            }
+                        }
                     }
+
+                    (activity as MainMenuActivity).replaceFragments(PlayerFragment())
                 }
             }
         }
+    }
+
+    private fun checkInvited(results: InviteRes): Boolean{
+        for(invite in results.invites){
+            if(invite.teamId == Session.sessionPlayer.teamId){
+                binding.btnKickInvitePlayer.setText(getText(R.string.btnInvitePending))
+                binding.btnKickInvitePlayer.icon = resources.getDrawable(R.drawable.baseline_access_time_24)
+
+                return false
+            }
+        }
+        return true
     }
 
     private fun checkBtnPConfirmEditEnabled(){

@@ -101,7 +101,7 @@ class TeamFragment : Fragment() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            var rosterList = ApiClient.apiClient.getPlayersByTeamId(loadedTeam.id.toString())
+            var rosterList = ApiClient.apiClient.getPlayersByTeamId(loadedTeam.id.toString()).body()!!
             mainMenuVM.searchTeamRoster(rosterList)
 
             var rosterText = ""
@@ -118,13 +118,13 @@ class TeamFragment : Fragment() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            var inscriptionList = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString())
+            var inscriptionList = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString()).body()!!
             mainMenuVM.searchRegisteredTournaments(inscriptionList)
         }
 
         binding.cardView5.visibility = View.GONE
         CoroutineScope(Dispatchers.Main).launch {
-            admin = ApiClient.apiClient.getPlayersById(loadedTeam.adminId)
+            admin = ApiClient.apiClient.getPlayersById(loadedTeam.adminId).body()!!
             Glide.with(binding.ivTAdmin).load(admin.image).into(binding.ivTAdmin)
             binding.tvTAdmin.text = admin.name
             binding.cardView5.visibility = View.VISIBLE
@@ -141,7 +141,7 @@ class TeamFragment : Fragment() {
             binding.btnTJoin.icon = resources.getDrawable(R.drawable.baseline_cancel_24)
         }else{
             CoroutineScope(Dispatchers.IO).launch(){
-                var results = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString())
+                var results = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString()).body()!!
                 for(invite in results.invites){
                     if(invite.teamId == loadedTeam.id){
                         binding.btnTJoin.text = getText(R.string.btnJoinTeam)
@@ -233,7 +233,7 @@ class TeamFragment : Fragment() {
                 editedTeam.name = binding.etTEditName.text.toString()
                 editedTeam.description = binding.etTEditDescription.text.toString()
                 ApiClient.apiClient.putTeamsById(editedTeam.id.toString(), editedTeam)
-                loadedTeam = ApiClient.apiClient.getTeamsById(editedTeam.id.toString())
+                loadedTeam = ApiClient.apiClient.getTeamsById(editedTeam.id.toString()).body()!!
 
                 Session.changeLoadedTeam(loadedTeam)
 
@@ -264,7 +264,7 @@ class TeamFragment : Fragment() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            var inscriptions = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString())
+            var inscriptions = ApiClient.apiClient.getInscriptionsByTeamId(loadedTeam.id.toString()).body()!!
             for(inscription in inscriptions.inscriptions){
                 ApiClient.apiClient.deleteInscriptionsById(inscription.id.toString())
             }

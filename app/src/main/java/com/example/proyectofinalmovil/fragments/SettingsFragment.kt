@@ -76,7 +76,7 @@ class SettingsFragment : Fragment() {
         binding.etUEditEmail.setText(Session.sessionPlayer.email)
 
         CoroutineScope(Dispatchers.IO).launch {
-            var inviteList = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString())
+            var inviteList = ApiClient.apiClient.getInvitesByPlayerId(Session.sessionPlayer.id.toString()).body()!!
             Log.d("Invitaciones a cargar", inviteList.invites.toString())
             mainMenuVM.searchInvites(inviteList)
         }
@@ -132,7 +132,7 @@ class SettingsFragment : Fragment() {
 
         binding.btnUConfirmEdit.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                var results = ApiClient.apiClient.getPlayersById(Session.sessionPlayer.id.toString())
+                var results = ApiClient.apiClient.getPlayersById(Session.sessionPlayer.id.toString()).body()!!
 
                 if (results.password == binding.etUActualPassword.text.toString()) {
 
@@ -185,6 +185,18 @@ class SettingsFragment : Fragment() {
 
         binding.clBtnLogOut.setOnClickListener {
             logOut()
+        }
+
+        binding.btnBackEditUser.setOnClickListener{
+            showView(binding.clStart)
+        }
+
+        binding.btnBackDeleteUser.setOnClickListener{
+            showView(binding.clStart)
+        }
+
+        binding.btnBackTeamInvites.setOnClickListener{
+            showView(binding.clStart)
         }
     }
 

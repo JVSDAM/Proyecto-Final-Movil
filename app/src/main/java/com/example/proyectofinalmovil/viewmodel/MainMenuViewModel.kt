@@ -31,7 +31,7 @@ class MainMenuViewModel: ViewModel() {
     val tournamentList: LiveData<MutableList<Tournament>> = _tournamentList
 
     fun searchPlayers(par: String){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             var list = mutableListOf<Player>()
 
             var results = ApiClient.apiClient.getPlayersByName(par)
@@ -40,8 +40,6 @@ class MainMenuViewModel: ViewModel() {
                 Log.d("Resultados", results.body()?.players.toString())
                 for(player in results.body()?.players!!){
                     list.add(player)
-                    Log.d("Nombre", player.name)
-                    Log.d("Estado lista", list.toString())
                 }
 
                 withContext(Dispatchers.Main) {
@@ -54,9 +52,9 @@ class MainMenuViewModel: ViewModel() {
     }
 
     fun searchTeams(par: String){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             var list = mutableListOf<Team>()
-            var results = ApiClient.apiClient.getTeamsByName(par)
+            var results = ApiClient.apiClient.getTeamsByName(par).body()!!
             Log.d("Resultados", results.teams.toString())
             for(team in results.teams){
                 list.add(team)
@@ -71,9 +69,9 @@ class MainMenuViewModel: ViewModel() {
     }
 
     fun searchTournaments(par: String){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             var list = mutableListOf<Tournament>()
-            var results = ApiClient.apiClient.getTournamentsByName(par)
+            var results = ApiClient.apiClient.getTournamentsByName(par).body()!!
             Log.d("Resultados", results.tournaments.toString())
             for(tournament in results.tournaments){
                 list.add(tournament)
@@ -108,7 +106,7 @@ class MainMenuViewModel: ViewModel() {
 
             for(inscription in inscriptionList.inscriptions){
                 Log.d("Inscripcion que se rec", inscription.toString())
-                var tournamentResult = ApiClient.apiClient.getTournamentsById(inscription.tournamentId)
+                var tournamentResult = ApiClient.apiClient.getTournamentsById(inscription.tournamentId).body()!!
                 Log.d("Resultado registered", tournamentResult.toString())
                 list.add(tournamentResult)
             }
@@ -124,7 +122,7 @@ class MainMenuViewModel: ViewModel() {
             var list = mutableListOf<Team>()
 
             for(inscription in inscriptionList.inscriptions){
-                var teamResult = ApiClient.apiClient.getTeamsById(inscription.teamId)
+                var teamResult = ApiClient.apiClient.getTeamsById(inscription.teamId).body()!!
                 Log.d("Resultado registered", teamResult.toString())
                 list.add(teamResult)
             }
@@ -140,7 +138,7 @@ class MainMenuViewModel: ViewModel() {
             var list = mutableListOf<Team>()
 
             for(invite in inviteList.invites){
-                var teamResult = ApiClient.apiClient.getTeamsById(invite.teamId)
+                var teamResult = ApiClient.apiClient.getTeamsById(invite.teamId).body()!!
                 list.add(teamResult)
             }
 

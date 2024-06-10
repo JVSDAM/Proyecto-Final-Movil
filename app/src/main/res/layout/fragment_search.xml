@@ -11,6 +11,7 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:foregroundTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -67,71 +68,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlSearch" />
-
-    <!-- <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
-
-        <Button
-            android:id="@+id/btnShowPlayers"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnShowPlayers" />
-
-        <Button
-            android:id="@+id/btnShowTeams"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnShowTeams" />
-
-        <Button
-            android:id="@+id/btnShowTournaments"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnShowTournaments" />
-    </com.google.android.material.button.MaterialButtonToggleGroup> -->
-
-    <!--<Button
-        android:id="@+id/btnShowPlayers"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#806F1F"
-        android:text="@string/btnShowPlayers"
-        app:layout_constraintEnd_toStartOf="@+id/btnShowTeams"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-    <Button
-        android:id="@+id/btnShowTeams"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/btnShowTeams"
-        app:layout_constraintEnd_toStartOf="@+id/btnShowTournaments"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnShowPlayers"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-    <Button
-        android:id="@+id/btnShowTournaments"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/btnShowTournaments"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnShowTeams"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,21 +78,21 @@ interface ApiInterface {
     suspend fun postInscriptions(@Body inscription: Inscription): Response<Inscription>
 
     @GET("/inscriptions/team/{team_id}")
-    suspend fun getInscriptionsByTeamId(@Path("team_id") teamId: String): InscriptionRes
+    suspend fun getInscriptionsByTeamId(@Path("team_id") teamId: String): Response<InscriptionRes>
 
     @GET("/inscriptions/tournament/{tournament_id}")
-    suspend fun getInscriptionsByTournamentId(@Path("tournament_id") tournamentId: String): InscriptionRes
+    suspend fun getInscriptionsByTournamentId(@Path("tournament_id") tournamentId: String): Response<InscriptionRes>
 
     @DELETE("/inscriptions/id/{id}")
-    suspend fun deleteInscriptionsById(@Path("id") id: String): Inscription
+    suspend fun deleteInscriptionsById(@Path("id") id: String): Response<Inscription>
 
     //INSCRIPTIONS
     @POST("/invites")
     suspend fun postInvites(@Body invite: Invite): Response<Invite>
 
     @GET("/invites/player/{player_id}")
-    suspend fun getInvitesByPlayerId(@Path("player_id") teamId: String): InviteRes
+    suspend fun getInvitesByPlayerId(@Path("player_id") teamId: String): Response<InviteRes>
 
     @DELETE("/invites/id/{id}")
-    suspend fun deleteInvitesById(@Path("id") id: String): Invite
+    suspend fun deleteInvitesById(@Path("id") id: String): Response<Invite>
 }
